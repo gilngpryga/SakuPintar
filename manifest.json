@@ -1,25 +1,25 @@
 {
   "name": "SakuPintar Money Management",
   "short_name": "SakuPintar",
-  "description": "Kelola kantong dan keuangan harian Anda",
-  "start_url": "index.html",
-  "scope": ".",
+  "description": "Kelola kantong dan keuangan harian Anda dengan mudah tanpa internet.",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#4F46E5",
+  "background_color": "#ffffff",
   "theme_color": "#4F46E5",
   "icons": [
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTQ0OCAzMmgtMjg4Yy0zNS4zNSAwLTY0IDI4LjY1LTY0IDY0djY0YzAgMzUuMzUgMjguNjUgNjQgNjQgNjRoMjg4YzM1LjM1IDAgNjQtMjguNjUgNjQtNjRWOTZjMC0zNS4zNS0yOC42NS02NC02NC02NHptMCAyMjRINjRjLTM1LjM1IDAtNjQgMjguNjUtNjQgNjR2MTYwYzAgMzUuMzUgMjguNjUgNjQgNjQgNjRoMzg0YzM1LjM1IDAgNjQtMjguNjUgNjQtNjRWMzIwcTAtNjQtNjQtNjR6bS00OCA5NmMwLTE3LjY3LTE0LjMzLTMyLTMyLTMycy0zMiAxNC4zMy0zMiAzMiAxNC4zMyAzMiAzMiAzMiAzMi0xNC4zMyAzMi0zMnoiLz48L3N2Zz4=",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0id2hpdGUiLz48cGF0aCBmaWxsPSIjNEY0NkVTIiBkPSJNNDQ4IDMySDE2MGMtMzUuMyAwLTY0IDI4LjctNjQgNjR2NjRjMCAzNS4zIDI4LjcgNjQgNjQgNjRoMjg4YzM1LjMgMCA2NC0yOC43IDY0LTY0Vjk2YzAtMzUuMy0yOC43LTY0LTY0LTY0ek02NCAyNTZjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2MGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjRWMzIwcTAtNjQtNjQtNjR6bS00OCA5NmMwLTE3LjY3LTE0LjMzLTMyLTMyLTMycy0zMiAxNC4zMy0zMiAzMiAxNC4zMyAzMiAzMiAzMiAzMi0xNC4zMyAzMi0zMnoiLz48L3N2Zz4=",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2933/2933116.png",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0id2hpdGUiLz48cGF0aCBmaWxsPSIjNEY0NkVTIiBkPSJNNDQ4IDMySDE2MGMtMzUuMyAwLTY0IDI4LjctNjQgNjR2NjRjMCAzNS4zIDI4LjcgNjQgNjQgNjRoMjg4YzM1LjMgMCA2NC0yOC43IDY0LTY0Vjk2YzAtMzUuMy0yOC43LTY0LTY0LTY0ek02NCAyNTZjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2MGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjRWMzIwcTAtNjQtNjQtNjR6bS00OCA5NmMwLTE3LjY3LTE0LjMzLTMyLTMyLTMycy0zMiAxNC4zMy0zMiAzMiAxNC4zMyAzMiAzMiAzMiAzMi0xNC4zMyAzMi0zMnoiIHRyYW5zZm9ybT0ic2NhbGUoMC42NSkgdHJhbnNsYXRlKDkwLCA5MCkiLz48L3N2Zz4=",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }
