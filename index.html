@@ -1,338 +1,157 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SakuPintar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SakuPintar - Money Management</title>
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="SakuPintar">
-  <link rel="apple-touch-icon" href="icon-192.png">
+    <!-- PWA Meta Tags & Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SakuPintar">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+    <!-- Library Eksternal (Akan di-cache oleh Service Worker untuk luring) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Font Awesome -->
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    rel="stylesheet"
-  >
-
-  <!-- Custom Style -->
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-
-    .glass {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-    }
-  </style>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #818cf8; }
+        .chart-container { position: relative; height: 260px; width: 100%; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes toastIn { 0% { opacity: 0; transform: translate(-50%, 20px); } 100% { opacity: 1; transform: translate(-50%, 0); } }
+        .toast-animation { animation: toastIn 0.3s ease-out forwards; }
+        .chart-legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; color: #64748b; }
+        .legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+    </style>
 </head>
 
 <body class="bg-gray-50 min-h-screen">
-
-<!-- ================= NAVBAR ================= -->
-
-<nav class="bg-indigo-600 text-white shadow-lg sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-
-    <h1 class="text-xl font-bold flex items-center gap-2">
-      <i class="fas fa-wallet"></i>
-      SakuPintar
-    </h1>
-
-    <div
-      id="totalBalanceHeader"
-      class="text-sm font-medium bg-indigo-700 px-3 py-1 rounded-full"
-    >
-      Total Saldo: Rp 0
-    </div>
-
-  </div>
-</nav>
-
-<!-- ================= MAIN ================= -->
-
-<main class="max-w-6xl mx-auto px-4 py-8">
-
-  <!-- Stats -->
-  <div
-    id="statsCards"
-    class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
-  ></div>
-
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-    <!-- Pocket Sidebar -->
-    <div class="lg:col-span-4">
-      <div class="glass p-6 rounded-2xl shadow-sm border">
-
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="font-bold text-gray-800">Daftar Kantong</h2>
-
-          <button
-            onclick="toggleModal('pocketModal')"
-            class="text-indigo-600 hover:text-indigo-800 text-sm font-semibold"
-          >
-            <i class="fas fa-plus-circle"></i>
-            Tambah
-          </button>
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold flex items-center gap-2">
+                <i class="fas fa-wallet text-indigo-200"></i> SakuPintar
+            </h1>
+            <div id="totalBalanceHeader" class="text-sm font-bold bg-indigo-700/50 px-4 py-1.5 rounded-full border border-white/20 backdrop-blur-sm">
+                Saldo: Rp 0
+            </div>
         </div>
+    </nav>
 
-        <div id="pocketList" class="space-y-3"></div>
-
-      </div>
-    </div>
-
-    <!-- Transaction Area -->
-    <div class="lg:col-span-8">
-      <div class="glass p-6 rounded-2xl shadow-sm border min-h-[500px]">
-
-        <!-- Header -->
-        <div
-          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6"
-        >
-
-          <div>
-            <h2
-              id="currentPocketTitle"
-              class="font-bold text-xl text-gray-800"
-            >
-              Semua Transaksi
-            </h2>
-
-            <p
-              id="currentPocketDesc"
-              class="text-sm text-gray-500"
-            >
-              Kelola arus kas Anda dengan bijak
-            </p>
-          </div>
-
-          <button
-            onclick="openTransactionModal()"
-            class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-all flex items-center gap-2"
-          >
-            <i class="fas fa-plus"></i>
-            Transaksi Baru
-          </button>
-
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <div id="statsCards" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Sidebar -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="glass p-6 rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
+                    <h2 class="font-extrabold text-gray-800 flex items-center gap-2 mb-6"><i class="fas fa-chart-pie text-indigo-500"></i> Alokasi Dana</h2>
+                    <div class="chart-container mb-4"><canvas id="pocketChart"></canvas></div>
+                    <div id="chartLegend" class="grid grid-cols-2 gap-y-2 gap-x-4 pt-4 border-t border-gray-50"></div>
+                </div>
+                <div class="glass p-6 rounded-3xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="font-extrabold text-gray-800">Daftar Kantong</h2>
+                        <button onclick="toggleModal('pocketModal')" class="text-indigo-600 hover:text-indigo-800 text-xs font-black uppercase tracking-wider flex items-center gap-1"><i class="fas fa-plus-circle"></i> Tambah</button>
+                    </div>
+                    <div id="pocketList" class="space-y-3"></div>
+                </div>
+            </div>
+            <!-- Transactions -->
+            <div class="lg:col-span-8">
+                <div class="glass p-6 rounded-3xl shadow-sm border border-gray-200 min-h-[500px]">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                        <div>
+                            <h2 id="currentPocketTitle" class="font-black text-2xl text-gray-800 tracking-tight">Semua Transaksi</h2>
+                            <p id="currentPocketDesc" class="text-sm text-gray-400 font-medium tracking-wide uppercase">Riwayat Arus Kas</p>
+                        </div>
+                        <button onclick="openTransactionModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl transition-all shadow-xl shadow-indigo-100 flex items-center gap-2 font-bold"><i class="fas fa-plus"></i> Transaksi Baru</button>
+                    </div>
+                    <div id="yearNavigationContainer" class="flex justify-center items-center mb-8">
+                        <div class="flex items-center bg-white rounded-2xl px-2 py-2 gap-4 border border-gray-100 shadow-sm">
+                            <button id="prevYearBtn" onclick="changeYear(-1)" class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-300 hover:text-indigo-600 transition-all disabled:opacity-10"><i class="fas fa-chevron-left text-sm"></i></button>
+                            <div class="flex flex-col items-center px-4">
+                                <span class="text-[9px] font-black text-gray-300 uppercase tracking-widest">Tahun</span>
+                                <span id="displayYear" class="text-xl font-black text-gray-800 leading-tight">2024</span>
+                            </div>
+                            <button id="nextYearBtn" onclick="changeYear(1)" class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-300 hover:text-indigo-600 transition-all disabled:opacity-10"><i class="fas fa-chevron-right text-sm"></i></button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-gray-400 text-[10px] uppercase font-black tracking-widest border-b border-gray-50"><th class="pb-4">Tanggal</th><th class="pb-4">Keterangan</th><th class="pb-4 text-right">Nominal</th><th class="pb-4 text-center">Aksi</th></tr>
+                            </thead>
+                            <tbody id="transactionBody" class="divide-y divide-gray-50/50"></tbody>
+                        </table>
+                        <div id="emptyState" class="hidden py-24 text-center fade-in"><p class="text-gray-400 font-bold text-sm">Tidak ada transaksi di tahun ini.</p></div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </main>
 
-        <!-- Table -->
-        <div class="overflow-x-auto">
-
-          <table class="w-full text-left">
-            <thead>
-              <tr class="text-gray-400 text-xs uppercase border-b">
-                <th class="pb-3">Tanggal</th>
-                <th class="pb-3">Keterangan</th>
-                <th class="pb-3 text-right">Nominal</th>
-                <th class="pb-3 text-center">Aksi</th>
-              </tr>
-            </thead>
-
-            <tbody
-              id="transactionBody"
-              class="divide-y"
-            ></tbody>
-
-          </table>
-
-          <!-- Empty State -->
-          <div
-            id="emptyState"
-            class="hidden py-20 text-center text-gray-400"
-          >
-            <i class="fas fa-receipt text-4xl mb-3 opacity-20"></i>
-            <p>Belum ada transaksi di kantong ini.</p>
-          </div>
-
+    <!-- Modals -->
+    <div id="pocketModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-[60] p-4 backdrop-blur-md">
+        <div class="bg-white rounded-[2.5rem] w-full max-w-md p-8 shadow-2xl">
+            <h3 class="text-xl font-black text-gray-800 mb-6">Kantong Baru</h3>
+            <div class="space-y-6">
+                <input type="text" id="pocketName" placeholder="Nama Kantong" class="w-full bg-gray-50 border-none rounded-2xl px-5 py-4 focus:ring-2 focus:ring-indigo-500 outline-none font-semibold">
+                <div id="iconPicker" class="grid grid-cols-6 gap-3 max-h-48 overflow-y-auto p-1"></div>
+                <input type="hidden" id="pocketIcon" value="fa-wallet">
+            </div>
+            <div class="mt-10 flex gap-4">
+                <button onclick="toggleModal('pocketModal')" class="flex-1 py-4 bg-gray-100 text-gray-500 font-black rounded-2xl uppercase text-xs">Batal</button>
+                <button onclick="addPocket()" class="flex-1 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-lg uppercase text-xs">Simpan</button>
+            </div>
         </div>
-
-      </div>
     </div>
 
-  </div>
-
-</main>
-
-<!-- ================= POCKET MODAL ================= -->
-
-<div
-  id="pocketModal"
-  class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-[60] p-4"
->
-
-  <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
-
-    <h3 class="text-lg font-bold mb-4">Buat Kantong Baru</h3>
-
-    <div class="space-y-4">
-
-      <input
-        type="text"
-        id="pocketName"
-        placeholder="Nama Kantong"
-        class="w-full border rounded-lg px-3 py-2"
-      >
-
-      <!-- Icon Preview -->
-      <div class="flex items-center gap-3">
-        <span class="text-sm text-gray-500">Icon dipilih:</span>
-        <div
-          id="selectedIconPreview"
-          class="text-xl text-indigo-600"
-        >
-          <i class="fas fa-wallet"></i>
+    <div id="transactionModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-[60] p-4 backdrop-blur-md">
+        <div class="bg-white rounded-[2.5rem] w-full max-w-md p-8 shadow-2xl">
+            <h3 class="text-xl font-black text-gray-800 mb-8">Catat Transaksi</h3>
+            <form id="txForm" class="space-y-5">
+                <div class="grid grid-cols-2 gap-4">
+                    <button type="button" id="btnTypeIn" onclick="setTxType('in')" class="py-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-600 font-black text-xs uppercase">Masuk</button>
+                    <button type="button" id="btnTypeOut" onclick="setTxType('out')" class="py-4 rounded-2xl border-2 border-transparent bg-gray-50 text-gray-400 font-black text-xs uppercase">Keluar</button>
+                </div>
+                <input type="number" id="txAmount" placeholder="Nominal" required class="w-full bg-gray-50 border-none rounded-2xl px-5 py-4 focus:ring-2 focus:ring-indigo-500 outline-none font-bold">
+                <input type="text" id="txNote" placeholder="Keterangan" required class="w-full bg-gray-50 border-none rounded-2xl px-5 py-4 focus:ring-2 focus:ring-indigo-500 outline-none font-semibold">
+                <input type="date" id="txDate" required class="w-full bg-gray-50 border-none rounded-2xl px-5 py-4 focus:ring-2 focus:ring-indigo-500 outline-none font-semibold">
+            </form>
+            <div class="mt-10 flex gap-4">
+                <button onclick="toggleModal('transactionModal')" class="flex-1 py-4 bg-gray-100 text-gray-500 font-black rounded-2xl uppercase text-xs">Batal</button>
+                <button onclick="saveTransaction()" class="flex-1 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-lg uppercase text-xs">Simpan</button>
+            </div>
         </div>
-      </div>
-
-      <!-- Icon Picker -->
-      <div
-        id="iconPicker"
-        class="grid grid-cols-5 gap-3"
-      ></div>
-
-      <!-- Hidden Input -->
-      <input type="hidden" id="pocketIcon" value="fa-wallet">
-
     </div>
 
-    <div class="mt-6 flex gap-3">
-
-      <button
-        onclick="toggleModal('pocketModal')"
-        class="flex-1 px-4 py-2 border rounded-lg"
-      >
-        Batal
-      </button>
-
-      <button
-        onclick="addPocket()"
-        class="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg"
-      >
-        Simpan
-      </button>
-
+    <div id="confirmModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-[100] p-4 backdrop-blur-md">
+        <div class="bg-white rounded-[2rem] w-full max-w-xs p-8 shadow-2xl text-center">
+            <h3 class="text-xl font-black text-gray-800 mb-3">Hapus Data?</h3>
+            <p id="confirmMessage" class="text-sm text-gray-400 mb-8">Data tidak dapat dikembalikan.</p>
+            <div class="flex gap-4">
+                <button id="cancelConfirm" class="flex-1 py-3 bg-gray-50 text-gray-400 font-bold rounded-xl text-xs uppercase">Batal</button>
+                <button id="okConfirm" class="flex-1 py-3 bg-red-500 text-white font-bold rounded-xl shadow-lg text-xs uppercase">Hapus</button>
+            </div>
+        </div>
     </div>
 
-  </div>
-</div>
-
-<!-- ================= TRANSACTION MODAL ================= -->
-
-<div
-  id="transactionModal"
-  class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-[60] p-4"
->
-
-  <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
-
-    <h3
-      id="txModalTitle"
-      class="text-lg font-bold mb-4"
-    >
-      Tambah Transaksi
-    </h3>
-
-    <form id="txForm" class="space-y-4">
-
-      <div class="grid grid-cols-2 gap-4">
-
-        <button
-          type="button"
-          id="btnTypeIn"
-          onclick="setTxType('in')"
-          class="py-2 rounded-lg border-2 border-emerald-500 bg-emerald-50 text-emerald-600 font-bold"
-        >
-          Pemasukan
-        </button>
-
-        <button
-          type="button"
-          id="btnTypeOut"
-          onclick="setTxType('out')"
-          class="py-2 rounded-lg bg-gray-100 text-gray-600 font-bold"
-        >
-          Pengeluaran
-        </button>
-
-      </div>
-
-      <input
-        type="number"
-        id="txAmount"
-        placeholder="Nominal"
-        required
-        class="w-full border rounded-lg px-3 py-2"
-      >
-
-      <input
-        type="text"
-        id="txNote"
-        placeholder="Keterangan"
-        required
-        class="w-full border rounded-lg px-3 py-2"
-      >
-
-      <input
-        type="date"
-        id="txDate"
-        required
-        class="w-full border rounded-lg px-3 py-2"
-      >
-
-    </form>
-
-    <div class="mt-6 flex gap-3">
-
-      <button
-        onclick="toggleModal('transactionModal')"
-        class="flex-1 px-4 py-2 border rounded-lg"
-      >
-        Batal
-      </button>
-
-      <button
-        onclick="saveTransaction()"
-        class="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg"
-      >
-        Simpan
-      </button>
-
-    </div>
-
-  </div>
-</div>
-
-<!-- ================= SCRIPTS ================= -->
-
-<script src="app.js"></script>
-
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('./sw.js')
-        .then(reg => console.log('Service Worker registered:', reg))
-        .catch(err => console.log('Service Worker error:', err));
-    });
-  }
-</script>
-
+    <!-- Script Utama (Dipisah untuk kemudahan Obfuscation) -->
+    <script src="app.js"></script>
 </body>
 </html>
