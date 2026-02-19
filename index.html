@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SakuPintar</title>
+    <title>SakuPintar - Money Management</title>
 
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4F46E5">
@@ -11,11 +11,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="SakuPintar">
     
+    <!-- Apple Touch Icon (Putih dengan Logo Indigo) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0id2hpdGUiLz48cGF0aCBmaWxsPSIjNEY0NkVTIiBkPSJNNDQ4IDMySDE2MGMtMzUuMyAwLTY0IDI4LjctNjQgNjR2NjRjMCAzNS4zIDI4LjcgNjQgNjQgNjRoMjg4YzM1LjMgMCA2NC0yOC43IDY0LTY0Vjk2YzAtMzUuMy0yOC43LTY0LTY0LTY0ek02NCAyNTZjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2MGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjRWMzIwcTAtNjQtNjQtNjR6bS00OCA5NmMwLTE3LjY3LTE0LjMzLTMyLTMyLTMycy0zMiAxNC4zMy0zMiAzMiAxNC4zMyAzMiAzMiAzMiAzMi0xNC4zMyAzMi0zMnoiIHRyYW5zZm9ybT0ic2NhbGUoMC44KSB0cmFuc2xhdGUoNTAsIDUwKSIvPjwvc3ZnPg==">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Library Eksternal -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -37,7 +39,6 @@
 </head>
 
 <body class="bg-gray-50 min-h-screen">
-    <!-- Navbar -->
     <nav class="bg-indigo-600 text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold flex items-center gap-2">
@@ -50,20 +51,14 @@
     </nav>
 
     <main class="max-w-6xl mx-auto px-4 py-8">
-        <!-- Stats Cards -->
         <div id="statsCards" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"></div>
-
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <!-- Sidebar Left -->
             <div class="lg:col-span-4 space-y-6">
-                <!-- Chart Card -->
                 <div class="glass p-6 rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
                     <h2 class="font-extrabold text-gray-800 flex items-center gap-2 mb-6"><i class="fas fa-chart-pie text-indigo-500"></i> Alokasi Dana</h2>
                     <div class="chart-container mb-4"><canvas id="pocketChart"></canvas></div>
                     <div id="chartLegend" class="grid grid-cols-2 gap-y-2 gap-x-4 pt-4 border-t border-gray-50"></div>
                 </div>
-
-                <!-- Pocket List Card -->
                 <div class="glass p-6 rounded-3xl shadow-sm border border-gray-200">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="font-extrabold text-gray-800">Daftar Kantong</h2>
@@ -72,11 +67,8 @@
                     <div id="pocketList" class="space-y-3"></div>
                 </div>
             </div>
-
-            <!-- Transaction List -->
             <div class="lg:col-span-8">
                 <div class="glass p-6 rounded-3xl shadow-sm border border-gray-200 min-h-[500px]">
-                    <!-- Table Header Controls -->
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                         <div>
                             <h2 id="currentPocketTitle" class="font-black text-2xl text-gray-800 tracking-tight">Semua Transaksi</h2>
@@ -84,8 +76,6 @@
                         </div>
                         <button onclick="openTransactionModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl transition-all shadow-xl shadow-indigo-100 flex items-center gap-2 font-bold"><i class="fas fa-plus"></i> Transaksi Baru</button>
                     </div>
-
-                    <!-- Year Navigation -->
                     <div id="yearNavigationContainer" class="flex justify-center items-center mb-8">
                         <div class="flex items-center bg-white rounded-2xl px-2 py-2 gap-4 border border-gray-100 shadow-sm">
                             <button id="prevYearBtn" onclick="changeYear(-1)" class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-300 hover:text-indigo-600 transition-all disabled:opacity-10"><i class="fas fa-chevron-left text-sm"></i></button>
@@ -96,20 +86,13 @@
                             <button id="nextYearBtn" onclick="changeYear(1)" class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-300 hover:text-indigo-600 transition-all disabled:opacity-10"><i class="fas fa-chevron-right text-sm"></i></button>
                         </div>
                     </div>
-
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
                             <thead>
-                                <tr class="text-gray-400 text-[10px] uppercase font-black tracking-widest border-b border-gray-50">
-                                    <th class="pb-4">Tanggal</th>
-                                    <th class="pb-4">Keterangan</th>
-                                    <th class="pb-4 text-right">Nominal</th>
-                                    <th class="pb-4 text-center">Aksi</th>
-                                </tr>
+                                <tr class="text-gray-400 text-[10px] uppercase font-black tracking-widest border-b border-gray-50"><th class="pb-4">Tanggal</th><th class="pb-4">Keterangan</th><th class="pb-4 text-right">Nominal</th><th class="pb-4 text-center">Aksi</th></tr>
                             </thead>
                             <tbody id="transactionBody" class="divide-y divide-gray-50/50"></tbody>
                         </table>
-                        <!-- Empty State -->
                         <div id="emptyState" class="hidden py-24 text-center fade-in"><p class="text-gray-400 font-bold text-sm">Tidak ada transaksi di tahun ini.</p></div>
                     </div>
                 </div>
