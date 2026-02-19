@@ -1,46 +1,63 @@
-const CACHE_NAME = 'sakupintar-v1';
+const CACHE_NAME = 'sakupintar-cache-v3';
+
+// app.js ditambahkan agar ikut tersimpan saat offline
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './app.js',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png',
-  './Screenshot_Pocket_1.jpeg',
-  './Screenshot_Pocket_2.jpeg',
-  './Screenshot_Pocket_3.jpeg',
-  './Screenshot_Pocket_4.jpeg'
+  './icon-512.png'
 ];
 
-// Install Service Worker
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Service Worker: Caching App Shell');
+        return cache.addAll(ASSETS_TO_CACHE);
+      })
+      .then(() => self.skipWaiting())
   );
 });
 
-// Aktivasi dan Hapus Cache Lama
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
+            console.log('Service Worker: Menghapus cache lama', cache);
             return caches.delete(cache);
           }
         })
       );
+    }).then(() => self.clients.claim())
+  );
+});
+
+// Strategi Caching Dinamis: Stale-While-Revalidate
+self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      
+      const fetchPromise = fetch(event.request).then((networkResponse) => {
+        if (networkResponse && (networkResponse.status === 200 || networkResponse.status === 0)) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      }).catch(() => {
+        console.log('Offline mode: Memuat dari cache', event.request.url);
+      });
+
+      return cachedResponse || fetchPromise;
     })
   );
 });
 
-// Fetching Aset dari Cache
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
-});
+
