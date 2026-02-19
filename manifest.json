@@ -1,25 +1,18 @@
 {
-  "name": "SakuPintar Money Management",
   "short_name": "SakuPintar",
-  "description": "Kelola kantong dan keuangan harian Anda dengan mudah tanpa internet.",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#ffffff",
-  "theme_color": "#4F46E5",
+  "name": "SakuPintar - Money Management",
+  "description": "Aplikasi manajemen keuangan pribadi yang cerdas.",
   "icons": [
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0id2hpdGUiLz48cGF0aCBmaWxsPSIjNEY0NkVTIiBkPSJNNDQ4IDMySDE2MGMtMzUuMyAwLTY0IDI4LjctNjQgNjR2NjRjMCAzNS4zIDI4LjcgNjQgNjQgNjRoMjg4YzM1LjMgMCA2NC0yOC43IDY0LTY0Vjk2YzAtMzUuMy0yOC43LTY0LTY0LTY0ek02NCAyNTZjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2MGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjRWMzIwcTAtNjQtNjQtNjR6bS00OCA5NmMwLTE3LjY3LTE0LjMzLTMyLTMyLTMycy0zMiAxNC4zMy0zMiAzMiAxNC4zMyAzMiAzMiAzMiAzMi0xNC4zMyAzMi0zMnoiLz48L3N2Zz4=",
-      "sizes": "512x512",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0id2hpdGUiLz48ZyB0cmFuc2Zvcm09InNjYWxlKDAuNykgdHJhbnNsYXRlKDc3LCA3NykiPjxwYXRoIGZpbGw9IiM0RjQ2RTUiIGQ9Ik00NDggMzJIMS2MWMtMzUuMyAwLTY0IDI4LjctNjQgNjR2NjRjMCAzNS4zIDI4LjcgNjQgNjQgNjRoMjg4YzM1LjMgMCA2NC0yOC43IDY0LTY0Vjk2YzAtMzUuMy0yOC43LTY0LTY0LTY0ek02NCAyNTZjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2MGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjRWMzIwcTAtNjQtNjQtNjR6bS00OCA5NmMwLTE3LjcgMTQuMy0zMiAzMi0zMnMzMiAxNC4zIDMyIDMyLTE0LjMgMzItMzIgMzItMzItMTQuMy0zMi0zMnoiLz48L2c+PC9zdmc+",
       "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0id2hpdGUiLz48cGF0aCBmaWxsPSIjNEY0NkVTIiBkPSJNNDQ4IDMySDE2MGMtMzUuMyAwLTY0IDI4LjctNjQgNjR2NjRjMCAzNS4zIDI4LjcgNjQgNjQgNjRoMjg4YzM1LjMgMCA2NC0yOC43IDY0LTY0Vjk2YzAtMzUuMy0yOC43LTY0LTY0LTY0ek02NCAyNTZjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2MGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjRWMzIwcTAtNjQtNjQtNjR6bS00OCA5NmMwLTE3LjY3LTE0LjMzLTMyLTMyLTMycy0zMiAxNC4zMy0zMiAzMiAxNC4zMyAzMiAzMiAzMiAzMi0xNC4zMyAzMi0zMnoiIHRyYW5zZm9ybT0ic2NhbGUoMC42NSkgdHJhbnNsYXRlKDkwLCA5MCkiLz48L3N2Zz4=",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "scope": "./",
+  "background_color": "#ffffff",
+  "theme_color": "#4F46E5"
 }
