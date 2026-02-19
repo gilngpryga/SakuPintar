@@ -1,14 +1,20 @@
 {
   "name": "SakuPintar Money Management",
   "short_name": "SakuPintar",
-  "description": "Kelola kantong dan keuangan harian Anda dengan mudah tanpa internet.",
+  "description": "Kelola kantong dan keuangan harian Anda",
   "start_url": "index.html",
   "scope": ".",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#ffffff",
+  "background_color": "#4F46E5",
   "theme_color": "#4F46E5",
   "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/wallet.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
     {
       "src": "https://cdn-icons-png.flaticon.com/512/2933/2933116.png",
       "sizes": "192x192",
