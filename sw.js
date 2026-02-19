@@ -1,46 +1,32 @@
-const CACHE_NAME = 'sakupintar-v1';
+const CACHE_NAME = 'sakupintar-v3';
 const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './app.js',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './Screenshot_Pocket_1.jpeg',
-  './Screenshot_Pocket_2.jpeg',
-  './Screenshot_Pocket_3.jpeg',
-  './Screenshot_Pocket_4.jpeg'
+  'index.html',
+  'app.js', // Menambahkan app.js ke dalam daftar cache
+  'manifest.json',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap',
+  'https://cdn.tailwindcss.com',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
+  'https://cdn.jsdelivr.net/npm/chart.js'
 ];
 
-// Install Service Worker
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
   );
 });
 
-// Aktivasi dan Hapus Cache Lama
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
+    caches.keys().then((keys) => {
       return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
       );
     })
   );
 });
 
-// Fetching Aset dari Cache
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request).then((response) => response || fetch(event.request))
   );
 });
