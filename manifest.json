@@ -1,11 +1,11 @@
 {
-  "name": "SakuPintar - Catatan Keuangan",
+  "name": "SakuPintar - Money Management",
   "short_name": "SakuPintar",
-  "description": "Kelola pemasukan dan pengeluaran Anda dengan mudah dan cerdas.",
+  "description": "Aplikasi manajemen keuangan pribadi yang cerdas.",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#F9FAFB",
+  "background_color": "#4F46E5",
   "theme_color": "#4F46E5",
   "icons": [
     {
