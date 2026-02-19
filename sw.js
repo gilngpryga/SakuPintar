@@ -1,9 +1,8 @@
 /**
- * SakuPintar Service Worker - v5
- * Mengelola cache untuk akses Offline penuh.
+ * SakuPintar Service Worker - v7 (Versi Final & Konsisten)
  */
 
-const CACHE_NAME = 'sakupintar-v5';
+const CACHE_NAME = 'sakupintar-v7';
 const ASSETS_TO_CACHE = [
   './',
   'index.html',
@@ -15,6 +14,7 @@ const ASSETS_TO_CACHE = [
   'https://cdn.jsdelivr.net/npm/chart.js'
 ];
 
+// Instalasi: Simpan semua aset ke cache
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -24,6 +24,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
+// Aktivasi: Hapus cache lama agar aplikasi selalu diperbarui
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -35,6 +36,7 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
+// Fetch: Prioritaskan Cache (Offline First), jika gagal baru ke Jaringan
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
