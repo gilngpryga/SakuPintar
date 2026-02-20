@@ -124,11 +124,17 @@ function exportData() {
 }
 
 async function importData(event) {
-    // 1. Simpan referensi input dan file secara langsung agar tidak hilang saat proses 'await'
     const inputElement = event.target;
     const file = inputElement.files[0];
     
     if (!file) return;
+
+    // VALIDASI KEAMANAN: Memastikan hanya file .json yang bisa diproses
+    if (!file.name.toLowerCase().endsWith('.json')) {
+        showToast("Gagal: Harap pilih file cadangan berformat .json", "error");
+        inputElement.value = ''; // Reset input
+        return;
+    }
 
     const confirmData = await customConfirm(
         "Peringatan Timpa Data!", 
@@ -143,10 +149,7 @@ async function importData(event) {
                 if(importedData.pockets && importedData.transactions) {
                     pockets = importedData.pockets;
                     transactions = importedData.transactions;
-                    
-                    // Kembalikan view ke "Semua Kantong" agar tidak error jika ID kantong lama terhapus
                     activePocketId = "all"; 
-                    
                     saveAndRefresh();
                     showToast("Data berhasil dipulihkan!", "success");
                     toggleModal('settingsModal');
@@ -156,13 +159,10 @@ async function importData(event) {
             } catch (err) {
                 showToast("File rusak atau tidak valid!", "error");
             }
-            
-            // 2. Reset input file setelah semua proses selesai
             inputElement.value = '';
         };
         reader.readAsText(file);
     } else {
-        // Reset input file jika pengguna menekan "Batal"
         inputElement.value = '';
     }
 }
@@ -273,15 +273,8 @@ function customConfirm(title, message) {
             setTimeout(() => modal.classList.add('hidden'), 300);
         };
 
-        btnOk.onclick = () => {
-            closeModal();
-            resolve(true);
-        };
-
-        btnCancel.onclick = () => {
-            closeModal();
-            resolve(false);
-        };
+        btnOk.onclick = () => { closeModal(); resolve(true); };
+        btnCancel.onclick = () => { closeModal(); resolve(false); };
     });
 }
 
@@ -317,10 +310,6 @@ function showToast(msg, type = 'success') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
-
-document.querySelectorAll('input').forEach(input => {
-    input.addEventListener('input', () => input.classList.remove('input-error'));
-});
 
 function markInvalidInput(inputElement) {
     inputElement.classList.add('input-error', 'animate-shake');
@@ -726,7 +715,6 @@ window.onload = () => {
 // ==============================
 // OBFUSCATION SAFETY NET
 // ==============================
-// WAJIB ADA SAAT DIOBFUSCATE AGAR HTML BISA MENGAKSES FUNGSI INI
 window.changeYear = changeYear;
 window.toggleModal = toggleModal;
 window.togglePocketModal = togglePocketModal;
@@ -742,3 +730,5 @@ window.selectIcon = selectIcon;
 window.selectPocket = selectPocket;
 window.deletePocket = deletePocket;
 window.deleteTransaction = deleteTransaction;
+
+
