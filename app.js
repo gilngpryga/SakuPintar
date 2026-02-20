@@ -641,7 +641,7 @@ function renderStats() {
         <div class="${selisih >= 0 ? 'bg-indigo-600 hover:bg-indigo-700' : 'bg-rose-600 hover:bg-rose-700'} p-5 rounded-3xl text-white shadow-lg relative overflow-hidden transition-colors group">
             <div class="absolute right-[-10px] top-[-10px] w-24 h-24 bg-white/10 rounded-full group-hover:scale-110 transition-transform"></div>
             <div class="absolute right-4 top-4 text-white/50 text-2xl"><i class="fas fa-wallet"></i></div>
-            <p class="text-xs font-bold uppercase mb-2 relative z-10 tracking-wide opacity-90">Total Saldo Saat Ini</p>
+            <p class="text-xs font-bold uppercase mb-2 relative z-10 tracking-wide opacity-90">Total Saldo</p>
             <p class="text-2xl font-bold relative z-10">${formatIDR(selisih)}</p>
         </div>
     `;
