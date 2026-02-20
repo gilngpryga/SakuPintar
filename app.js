@@ -68,7 +68,8 @@ function renderYearNavigation() {
     const idx = availableYears.indexOf(currentYear);
     document.getElementById("prevYearBtn").disabled = idx <= 0;
     document.getElementById("nextYearBtn").disabled = idx >= availableYears.length - 1;
-    document.getElementById("yearDisplay").innerText = `Tahun ${currentYear}`;
+    // PERUBAHAN TAHUN: Langsung tampilkan angka tahun (misal: "2026")
+    document.getElementById("yearDisplay").innerText = currentYear;
 }
 
 function changeYear(step) {
@@ -129,10 +130,9 @@ async function importData(event) {
     
     if (!file) return;
 
-    // VALIDASI KEAMANAN: Memastikan hanya file .json yang bisa diproses
     if (!file.name.toLowerCase().endsWith('.json')) {
         showToast("Gagal: Harap pilih file cadangan berformat .json", "error");
-        inputElement.value = ''; // Reset input
+        inputElement.value = '';
         return;
     }
 
@@ -561,7 +561,8 @@ function renderTransactions() {
         html += `
             <tr class="bg-indigo-50/50 border-y border-indigo-100">
                 <td colspan="4" class="py-3 px-4 text-xs font-bold text-indigo-800 uppercase tracking-widest">
-                    <i class="fas fa-calendar-alt mr-2"></i> Bulan ${monthName}
+                    <!-- PERUBAHAN BULAN: Hapus kata "Bulan", langsung nama bulannya -->
+                    <i class="fas fa-calendar-alt mr-2"></i> ${monthName}
                 </td>
             </tr>
         `;
