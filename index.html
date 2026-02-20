@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SakuPintar - Pocket Management</title>
+    <title>SakuPintar - Money Management</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4F46E5">
@@ -41,6 +41,16 @@
         
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
+
+        /* Mempercantik ikon kalender bawaan browser */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.2s;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen pb-20">
@@ -103,6 +113,7 @@
                             <button id="prevYearBtn" onclick="changeYear(-1)" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white hover:bg-gray-100 text-gray-600 transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-gray-200 shadow-sm">
                                 <i class="fas fa-chevron-left"></i>
                             </button>
+                            <!-- Teks "Tahun" Dihapus -->
                             <h3 id="yearDisplay" class="font-bold text-gray-800 text-base tracking-wide bg-white px-6 py-2 rounded-lg border border-gray-200 shadow-sm">
                                 ...
                             </h3>
@@ -162,7 +173,6 @@
                         <span>Import Data (Restore)</span>
                     </div>
                     <i class="fas fa-chevron-right text-emerald-300"></i>
-                    <!-- PERUBAHAN DI SINI: accept="*/*" mematikan filter Android agar file bisa diklik -->
                     <input type="file" accept="*/*" class="hidden" onchange="importData(event)">
                 </label>
             </div>
@@ -219,10 +229,18 @@
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Keterangan</label>
                     <input type="text" id="txNote" placeholder="Contoh: Makan Siang / Gaji" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl px-4 py-3 outline-none transition-all font-medium text-gray-800">
                 </div>
+                
+                <!-- PERUBAHAN FORM TANGGAL: Lebih elegan dan tidak kaku -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Tanggal</label>
-                    <input type="date" id="txDate" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl px-4 py-3 outline-none transition-all font-medium text-gray-800">
+                    <div class="relative flex items-center">
+                        <div class="absolute left-4 text-gray-400 pointer-events-none flex items-center">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <input type="date" id="txDate" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl pl-11 pr-4 py-3 outline-none transition-all font-medium text-gray-800 cursor-pointer">
+                    </div>
                 </div>
+
                 <div class="mt-8 flex gap-3 pt-2">
                     <button type="button" onclick="toggleModal('transactionModal')" class="flex-1 px-4 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl font-bold transition-colors">Batal</button>
                     <button type="submit" class="flex-1 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-colors shadow-lg shadow-indigo-600/30">Simpan Data</button>
