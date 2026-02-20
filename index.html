@@ -62,14 +62,10 @@
     </nav>
 
     <main class="max-w-6xl mx-auto px-4 py-8">
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="statsCards">
-            <!-- Diisi oleh JS -->
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="statsCards"></div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div class="lg:col-span-4 space-y-8">
-                
                 <div class="glass p-6 rounded-2xl shadow-sm border border-gray-100">
                     <h2 class="font-bold text-gray-800 text-lg mb-6 text-center">Portfolio</h2>
                     <div class="relative h-56 w-full flex justify-center">
@@ -86,9 +82,7 @@
                             <i class="fas fa-plus-circle"></i> Kantong Baru
                         </button>
                     </div>
-                    <div id="pocketList" class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
-                        <!-- Diisi oleh JS -->
-                    </div>
+                    <div id="pocketList" class="space-y-3 max-h-[400px] overflow-y-auto pr-2"></div>
                 </div>
             </div>
 
@@ -127,9 +121,7 @@
                                         <th class="py-4 px-4 font-bold text-center w-32">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody id="transactionBody" class="divide-y divide-gray-100">
-                                    <!-- Diisi oleh JS -->
-                                </tbody>
+                                <tbody id="transactionBody" class="divide-y divide-gray-100"></tbody>
                             </table>
                             
                             <div id="emptyState" class="hidden py-20 flex flex-col items-center justify-center text-center bg-gray-50/50">
@@ -170,7 +162,8 @@
                         <span>Import Data (Restore)</span>
                     </div>
                     <i class="fas fa-chevron-right text-emerald-300"></i>
-                    <input type="file" accept=".json" class="hidden" onchange="importData(event)">
+                    <!-- PERUBAHAN DI SINI: accept="*/*" mematikan filter Android agar file bisa diklik -->
+                    <input type="file" accept="*/*" class="hidden" onchange="importData(event)">
                 </label>
             </div>
         </div>
@@ -252,7 +245,8 @@
         </div>
     </div>
 
-    <!-- Script Utama (Akan diobfuskasi) -->
     <script src="app.js"></script>
 </body>
 </html>
+
+
