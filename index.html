@@ -13,9 +13,18 @@
     <meta name="apple-mobile-web-app-title" content="SakuPintar">
     <link rel="apple-touch-icon" href="icon-192.png">
     
+    <!-- Library CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Flatpickr CSS untuk Kalender Modern -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <!-- Library JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Bahasa Indonesia untuk Kalender -->
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -42,14 +51,16 @@
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
 
-        /* Mempercantik ikon kalender bawaan browser */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            cursor: pointer;
-            opacity: 0.6;
-            transition: 0.2s;
+        /* Kustomisasi Tema Kalender Flatpickr agar warnanya Indigo */
+        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
+            background: #4F46E5 !important;
+            border-color: #4F46E5 !important;
         }
-        input[type="date"]::-webkit-calendar-picker-indicator:hover {
-            opacity: 1;
+        .flatpickr-calendar {
+            border-radius: 16px !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+            border: none !important;
+            padding: 10px !important;
         }
     </style>
 </head>
@@ -113,7 +124,6 @@
                             <button id="prevYearBtn" onclick="changeYear(-1)" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white hover:bg-gray-100 text-gray-600 transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-gray-200 shadow-sm">
                                 <i class="fas fa-chevron-left"></i>
                             </button>
-                            <!-- Teks "Tahun" Dihapus -->
                             <h3 id="yearDisplay" class="font-bold text-gray-800 text-base tracking-wide bg-white px-6 py-2 rounded-lg border border-gray-200 shadow-sm">
                                 ...
                             </h3>
@@ -230,14 +240,14 @@
                     <input type="text" id="txNote" placeholder="Contoh: Makan Siang / Gaji" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl px-4 py-3 outline-none transition-all font-medium text-gray-800">
                 </div>
                 
-                <!-- PERUBAHAN FORM TANGGAL: Lebih elegan dan tidak kaku -->
+                <!-- INPUT TANGGAL BARU (Tipe Text untuk mencegah kalender kaku bawaan HP) -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Tanggal</label>
                     <div class="relative flex items-center">
-                        <div class="absolute left-4 text-gray-400 pointer-events-none flex items-center">
-                            <i class="fas fa-calendar-day"></i>
+                        <div class="absolute left-4 text-indigo-500 pointer-events-none flex items-center z-10">
+                            <i class="fas fa-calendar-alt text-lg"></i>
                         </div>
-                        <input type="date" id="txDate" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl pl-11 pr-4 py-3 outline-none transition-all font-medium text-gray-800 cursor-pointer">
+                        <input type="text" id="txDate" placeholder="Pilih Tanggal" readonly class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl pl-12 pr-4 py-3 outline-none transition-all font-bold text-gray-800 cursor-pointer">
                     </div>
                 </div>
 
