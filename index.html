@@ -20,11 +20,9 @@
     <!-- Flatpickr CSS untuk Kalender Modern -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     
-    <!-- Library JS -->
+    <!-- Library JS (Script bahasa Indonesia eksternal dihapus agar tidak error) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <!-- Bahasa Indonesia untuk Kalender -->
-    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -240,14 +238,13 @@
                     <input type="text" id="txNote" placeholder="Contoh: Makan Siang / Gaji" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl px-4 py-3 outline-none transition-all font-medium text-gray-800">
                 </div>
                 
-                <!-- INPUT TANGGAL BARU (Tipe Text untuk mencegah kalender kaku bawaan HP) -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Tanggal</label>
                     <div class="relative flex items-center">
                         <div class="absolute left-4 text-indigo-500 pointer-events-none flex items-center z-10">
                             <i class="fas fa-calendar-alt text-lg"></i>
                         </div>
-                        <input type="text" id="txDate" placeholder="Pilih Tanggal" readonly class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl pl-12 pr-4 py-3 outline-none transition-all font-bold text-gray-800 cursor-pointer">
+                        <input type="text" id="txDate" placeholder="Pilih Tanggal" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl pl-12 pr-4 py-3 outline-none transition-all font-bold text-gray-800 cursor-pointer">
                     </div>
                 </div>
 
