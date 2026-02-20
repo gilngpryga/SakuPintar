@@ -742,5 +742,3 @@ window.selectIcon = selectIcon;
 window.selectPocket = selectPocket;
 window.deletePocket = deletePocket;
 window.deleteTransaction = deleteTransaction;
-
-
