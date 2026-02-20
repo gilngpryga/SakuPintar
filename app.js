@@ -20,6 +20,7 @@ let activeTxType = "in";
 let editingTxId = null;
 let selectedIcon = pocketIcons[0];
 let balanceChartInstance = null; 
+let flatpickrInstance = null; // Variabel global untuk kalender
 
 let currentYear = new Date().getFullYear();
 let availableYears = []; 
@@ -40,19 +41,6 @@ function getMonthName(monthIndex) {
     return months[monthIndex];
 }
 
-function setCurrentDateInForm() {
-    const dateInput = document.getElementById("txDate");
-    if (dateInput) {
-        const now = new Date();
-        if(now.getFullYear() === currentYear){
-             dateInput.value = now.toISOString().split("T")[0];
-        } else {
-             const customDate = new Date(currentYear, 0, 2); 
-             dateInput.value = customDate.toISOString().split("T")[0];
-        }
-    }
-}
-
 // ==============================
 // YEAR NAVIGATION
 // ==============================
@@ -68,7 +56,6 @@ function renderYearNavigation() {
     const idx = availableYears.indexOf(currentYear);
     document.getElementById("prevYearBtn").disabled = idx <= 0;
     document.getElementById("nextYearBtn").disabled = idx >= availableYears.length - 1;
-    // PERUBAHAN TAHUN: Langsung tampilkan angka tahun (misal: "2026")
     document.getElementById("yearDisplay").innerText = currentYear;
 }
 
@@ -312,8 +299,22 @@ function showToast(msg, type = 'success') {
 }
 
 function markInvalidInput(inputElement) {
-    inputElement.classList.add('input-error', 'animate-shake');
-    setTimeout(() => inputElement.classList.remove('animate-shake'), 300);
+    // Penanganan khusus untuk elemen flatpickr
+    if (inputElement.classList.contains('flatpickr-input')) {
+        const visibleInput = inputElement.nextElementSibling;
+        if(visibleInput) visibleInput.classList.add('input-error', 'animate-shake');
+    } else {
+        inputElement.classList.add('input-error', 'animate-shake');
+    }
+    
+    setTimeout(() => {
+        if (inputElement.classList.contains('flatpickr-input')) {
+            const visibleInput = inputElement.nextElementSibling;
+            if(visibleInput) visibleInput.classList.remove('animate-shake');
+        } else {
+            inputElement.classList.remove('animate-shake');
+        }
+    }, 300);
 }
 
 function toggleModal(modalId) {
@@ -460,7 +461,8 @@ function openTransactionModal(txId = null) {
         const tx = transactions.find(t => t.id === txId);
         document.getElementById("txAmount").value = tx.amount;
         document.getElementById("txNote").value = tx.note;
-        document.getElementById("txDate").value = tx.date;
+        
+        if (flatpickrInstance) flatpickrInstance.setDate(tx.date);
         
         selectCustomPocket(tx.pocketId);
         setTxType(tx.type);
@@ -468,7 +470,16 @@ function openTransactionModal(txId = null) {
         editingTxId = null;
         title.innerText = "Tambah Transaksi";
         document.getElementById("txForm").reset();
-        setCurrentDateInForm();
+        
+        if (flatpickrInstance) {
+            const now = new Date();
+            if(now.getFullYear() === currentYear){
+                 flatpickrInstance.setDate(now);
+            } else {
+                 flatpickrInstance.setDate(new Date(currentYear, 0, 2));
+            }
+        }
+        
         setTxType("in");
         
         if(activePocketId !== "all") {
@@ -485,7 +496,7 @@ function openTransactionModal(txId = null) {
 function saveTransaction() {
     const amountInput = document.getElementById("txAmount");
     const noteInput = document.getElementById("txNote");
-    const dateInput = document.getElementById("txDate");
+    const dateInput = document.getElementById("txDate"); // Flatpickr meng-update nilai aslinya di sini
     const pocketInput = document.getElementById("txPocketId");
     const pocketToggle = document.getElementById("customPocketSelectToggle");
 
@@ -561,7 +572,7 @@ function renderTransactions() {
         html += `
             <tr class="bg-indigo-50/50 border-y border-indigo-100">
                 <td colspan="4" class="py-3 px-4 text-xs font-bold text-indigo-800 uppercase tracking-widest">
-                    <!-- PERUBAHAN BULAN: Hapus kata "Bulan", langsung nama bulannya -->
+                    <!-- Teks 'Bulan' Dihapus -->
                     <i class="fas fa-calendar-alt mr-2"></i> ${monthName}
                 </td>
             </tr>
@@ -696,6 +707,20 @@ function renderChart() {
 // ==============================
 function init() {
     renderIconPicker();
+    
+    // Inisialisasi Kalender Custom Flatpickr
+    flatpickrInstance = flatpickr("#txDate", {
+        locale: "id",                 // Bahasa Indonesia
+        dateFormat: "Y-m-d",          // Format penyimpanan (penting untuk perhitungan aplikasi)
+        altInput: true,               // Membuat input visual tambahan yang lebih cantik
+        altFormat: "d F Y",           // Format visual (Contoh: 20 Februari 2026)
+        disableMobile: true,          // WAJIB: Mematikan kalender kaku bawaan HP
+        onChange: function() {
+            // Hapus efek error merah jika pengguna mengubah tanggal
+            document.querySelector('.flatpickr-input[type="text"]')?.classList.remove('input-error', 'animate-shake');
+        }
+    });
+
     saveAndRefresh(); 
 }
 
