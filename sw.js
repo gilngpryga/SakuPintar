@@ -1,5 +1,6 @@
 const CACHE_NAME = 'sakupintar-v5-transparent-test';
 
+// Daftar aset LOKAL yang wajib disimpan
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -49,9 +50,10 @@ self.addEventListener('fetch', (event) => {
           });
         }
         return networkResponse;
-      }).catch(() => {
-        // Offline mode
+      }).catch((error) => {
+        console.log('[Service Worker] Mode Offline');
       });
+
       return cachedResponse || fetchPromise;
     })
   );
