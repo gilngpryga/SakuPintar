@@ -20,7 +20,7 @@ let activeTxType = "in";
 let editingTxId = null;
 let selectedIcon = pocketIcons[0];
 let balanceChartInstance = null; 
-let flatpickrInstance = null; // Variabel global untuk kalender
+let flatpickrInstance = null; 
 
 let currentYear = new Date().getFullYear();
 let availableYears = []; 
@@ -299,22 +299,14 @@ function showToast(msg, type = 'success') {
 }
 
 function markInvalidInput(inputElement) {
-    // Penanganan khusus untuk elemen flatpickr
-    if (inputElement.classList.contains('flatpickr-input')) {
-        const visibleInput = inputElement.nextElementSibling;
-        if(visibleInput) visibleInput.classList.add('input-error', 'animate-shake');
-    } else {
-        inputElement.classList.add('input-error', 'animate-shake');
+    // Trik aman agar efek merah (shake) mengenai input kalender yang terlihat oleh mata pengguna
+    let targetEl = inputElement;
+    if (inputElement.id === 'txDate' && flatpickrInstance && flatpickrInstance.altInput) {
+        targetEl = flatpickrInstance.altInput;
     }
     
-    setTimeout(() => {
-        if (inputElement.classList.contains('flatpickr-input')) {
-            const visibleInput = inputElement.nextElementSibling;
-            if(visibleInput) visibleInput.classList.remove('animate-shake');
-        } else {
-            inputElement.classList.remove('animate-shake');
-        }
-    }, 300);
+    targetEl.classList.add('input-error', 'animate-shake');
+    setTimeout(() => targetEl.classList.remove('animate-shake'), 300);
 }
 
 function toggleModal(modalId) {
@@ -496,7 +488,7 @@ function openTransactionModal(txId = null) {
 function saveTransaction() {
     const amountInput = document.getElementById("txAmount");
     const noteInput = document.getElementById("txNote");
-    const dateInput = document.getElementById("txDate"); // Flatpickr meng-update nilai aslinya di sini
+    const dateInput = document.getElementById("txDate");
     const pocketInput = document.getElementById("txPocketId");
     const pocketToggle = document.getElementById("customPocketSelectToggle");
 
@@ -572,7 +564,6 @@ function renderTransactions() {
         html += `
             <tr class="bg-indigo-50/50 border-y border-indigo-100">
                 <td colspan="4" class="py-3 px-4 text-xs font-bold text-indigo-800 uppercase tracking-widest">
-                    <!-- Teks 'Bulan' Dihapus -->
                     <i class="fas fa-calendar-alt mr-2"></i> ${monthName}
                 </td>
             </tr>
@@ -708,16 +699,31 @@ function renderChart() {
 function init() {
     renderIconPicker();
     
-    // Inisialisasi Kalender Custom Flatpickr
+    // Inisialisasi Kalender Custom Flatpickr dengan Bahasa Indonesia Bawaan (Anti Offline Error)
     flatpickrInstance = flatpickr("#txDate", {
-        locale: "id",                 // Bahasa Indonesia
-        dateFormat: "Y-m-d",          // Format penyimpanan (penting untuk perhitungan aplikasi)
-        altInput: true,               // Membuat input visual tambahan yang lebih cantik
-        altFormat: "d F Y",           // Format visual (Contoh: 20 Februari 2026)
-        disableMobile: true,          // WAJIB: Mematikan kalender kaku bawaan HP
+        locale: {
+            weekdays: {
+                shorthand: ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
+                longhand: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"]
+            },
+            months: {
+                shorthand: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"],
+                longhand: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
+            },
+            firstDayOfWeek: 1
+        },
+        dateFormat: "Y-m-d",          
+        altInput: true,               
+        altFormat: "d F Y",           
+        disableMobile: true,          
+        onOpen: function(selectedDates, dateStr, instance) {
+            // Pastikan kalender selalu ada di atas Modal (Modal z-index: 60)
+            instance.calendarContainer.style.zIndex = "9999";
+        },
         onChange: function() {
-            // Hapus efek error merah jika pengguna mengubah tanggal
-            document.querySelector('.flatpickr-input[type="text"]')?.classList.remove('input-error', 'animate-shake');
+            if(flatpickrInstance && flatpickrInstance.altInput) {
+                flatpickrInstance.altInput.classList.remove('input-error', 'animate-shake');
+            }
         }
     });
 
