@@ -2,14 +2,11 @@
   "name": "SakuPintar - Money Management",
   "short_name": "SakuPintar",
   "description": "Aplikasi manajemen keuangan pribadi yang cerdas.",
-  "lang": "id",
-  "start_url": "/index.html",
-  "scope": "/",
+  "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#4F46E5",
   "theme_color": "#4F46E5",
-  "categories": ["finance", "productivity"],
   "icons": [
     {
       "src": "icon-192.png",
@@ -22,15 +19,6 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "screenshot-mobile.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Halaman utama SakuPintar"
     }
   ]
 }
