@@ -227,6 +227,72 @@ span.flatpickr-weekday{
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}
+
+/* ═══ MOBILE RESPONSIVE ═══ */
+@media(max-width:640px){
+  /* Main container: kurangi padding */
+  main{padding:1rem .75rem!important}
+  
+  /* Stat cards: 3 kartu horizontal compact dalam 1 baris, atau stack kecil */
+  #statsCards{
+    grid-template-columns:1fr!important;
+    gap:.75rem!important;
+    margin-bottom:1.25rem!important
+  }
+  .stat-card{
+    padding:1rem!important;
+    border-radius:1rem!important
+  }
+  .stat-label{font-size:.65rem!important;margin-bottom:.25rem!important}
+  .stat-value{font-size:1.2rem!important}
+  .stat-deco{width:4rem!important;height:4rem!important}
+  
+  /* Chart: lebih kecil di mobile */
+  #balanceChart,#balanceChart+p{max-height:11rem}
+  #leftCol > div:first-child > div{height:11rem!important}
+  
+  /* Section cards: kurangi padding */
+  #leftCol > div,
+  #rightCol > div{
+    padding:1rem!important;
+    border-radius:.875rem!important
+  }
+  
+  /* Transaction header: stack vertikal */
+  #rightCol .flex.md-flex-row{flex-direction:column!important;gap:.75rem!important}
+  #rightCol h2{font-size:1.1rem!important}
+  
+  /* Tombol Transaksi Baru: full width */
+  #rightCol button.btn-primary{width:100%!important}
+  
+  /* Year nav + search: lebih compact */
+  .year-nav{padding:.5rem .75rem!important}
+  .year-display{padding:.375rem 1rem!important;font-size:.875rem!important}
+  .search-wrap{padding:.5rem .75rem!important}
+  
+  /* Table: font lebih kecil */
+  #transactionBody td{padding:.625rem .5rem!important;font-size:.8rem!important}
+  thead th{padding:.625rem .5rem!important}
+  
+  /* Pocket list: kurangi gap */
+  #pocketList{gap:.5rem!important}
+  .pocket-item{padding:.625rem!important}
+  
+  /* Modal: kurangi padding, lebih pas di layar kecil */
+  .modal-overlay{padding:.5rem!important}
+  #settingsBox,#pocketBox,#transactionBox,#confirmBox{
+    padding:1.25rem!important;
+    border-radius:1.25rem!important
+  }
+  
+  /* Icon picker: 8 kolom di mobile agar lebih kecil */
+  #iconPicker{grid-template-columns:repeat(8,1fr)!important}
+}
+
+/* Stat cards: di layar sedang (641-768px) tampilkan 3 kolom kecil */
+@media(min-width:641px) and (max-width:767px){
+  #statsCards{grid-template-columns:repeat(3,1fr)!important;gap:.75rem!important}
+}
 </style>
 </head>
 <body>
@@ -248,10 +314,10 @@ span.flatpickr-weekday{
 </nav>
 
 <!-- MAIN -->
-<main style="max-width:72rem;margin:0 auto;padding:2rem 1rem">
+<main style="max-width:72rem;margin:0 auto;padding:1.5rem 1rem" id="mainContainer">
 
   <!-- Stats -->
-  <div id="statsCards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-bottom:2rem"></div>
+  <div id="statsCards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem"></div>
 
   <!-- Body grid -->
   <div style="display:grid;grid-template-columns:1fr;gap:2rem">
@@ -262,7 +328,7 @@ span.flatpickr-weekday{
       <!-- Chart -->
       <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)">
         <h2 style="font-weight:700;color:#1f2937;font-size:1.125rem;margin-bottom:1.5rem;text-align:center">Portofolio</h2>
-        <div style="position:relative;height:14rem;display:flex;justify-content:center">
+        <div style="position:relative;height:clamp(9rem,40vw,14rem);display:flex;justify-content:center">
           <canvas id="balanceChart"></canvas>
         </div>
         <p id="chartEmptyMsg" class="hidden" style="text-align:center;font-size:.75rem;color:#9ca3af;margin-top:.75rem;padding:0 1rem"></p>
@@ -324,7 +390,7 @@ span.flatpickr-weekday{
 
           <!-- Table scroll wrapper -->
           <div style="overflow-x:auto">
-            <table style="width:100%;min-width:550px;border-collapse:collapse">
+            <table style="width:100%;min-width:480px;border-collapse:collapse">
               <thead style="background:#f9fafb;border-bottom:1px solid #e5e7eb">
                 <tr>
                   <th style="padding:1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;text-align:left;width:6rem">Tanggal</th>
@@ -492,8 +558,8 @@ span.flatpickr-weekday{
 <script>
 // Apply 2-col layout on desktop
 (function(){
-  var main = document.querySelector('[style*="grid-template-columns:1fr"]');
-  if(main) main.id = 'mainGrid';
+  var mainGrid = document.querySelector('[style*="gap:2rem"]');
+  if(mainGrid && !mainGrid.id) mainGrid.id = 'mainGrid';
   function applyLayout(){
     var g = document.getElementById('mainGrid');
     if(!g) return;
