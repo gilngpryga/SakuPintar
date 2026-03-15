@@ -28,7 +28,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
 <style>
 *,::before,::after{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
-html{line-height:1.5;-webkit-text-size-adjust:100%}
+html{line-height:1.5;-webkit-text-size-adjust:100%;overflow-x:hidden}
+body{overflow-x:hidden}
 body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f8fafc;min-height:100vh;padding-bottom:80px}
 p{text-align:justify}
 .text-center{text-align:center!important}
@@ -48,7 +49,7 @@ img,svg,canvas{display:block}
 .icon-md{width:1.125rem;height:1.125rem}
 .icon-lg{width:1.5rem;height:1.5rem}
 .rotate-180{transform:rotate(180deg)}
-.pocket-item{padding:.75rem;border-radius:1rem;cursor:pointer;border:2px solid #f3f4f6;background:#fff;position:relative;display:flex;align-items:center;gap:.625rem}
+.pocket-item{padding:.75rem;border-radius:1rem;cursor:pointer;border:2px solid #f3f4f6;background:#fff;position:relative;display:flex;align-items:center;gap:.625rem;overflow:hidden;min-width:0}
 .pocket-item.active{border-color:#4f46e5;background:rgba(238,242,255,.5)}
 .stat-card{background:#fff;padding:1.25rem;border-radius:1.5rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05);position:relative;overflow:hidden}
 .stat-card-primary{background:#4f46e5;color:#fff}
@@ -233,27 +234,36 @@ span.flatpickr-weekday{
   /* Main container: kurangi padding */
   main{padding:1rem .75rem!important}
   
-  /* Stat cards: 3 kartu horizontal compact dalam 1 baris, atau stack kecil */
+  /* Stat cards: 3 kolom kecil berdampingan */
   #statsCards{
-    grid-template-columns:1fr!important;
-    gap:.75rem!important;
-    margin-bottom:1.25rem!important
+    grid-template-columns:repeat(3,1fr)!important;
+    gap:.5rem!important;
+    margin-bottom:1rem!important
   }
   .stat-card{
-    padding:1rem!important;
-    border-radius:1rem!important
+    padding:.75rem .625rem!important;
+    border-radius:.875rem!important
   }
-  .stat-label{font-size:.65rem!important;margin-bottom:.25rem!important}
-  .stat-value{font-size:1.2rem!important}
-  .stat-deco{width:4rem!important;height:4rem!important}
+  .stat-label{font-size:.55rem!important;margin-bottom:.2rem!important;letter-spacing:.03em!important}
+  .stat-value{font-size:.95rem!important}
+  .stat-deco{display:none!important}
+  /* Sembunyikan ikon dekorasi stat di mobile */
+  .stat-card>div[style*="position:absolute"]{display:none!important}
   
   /* Chart: lebih kecil di mobile */
   
   /* Section cards: kurangi padding */
   #leftCol > div,
   #rightCol > div{
-    padding:1rem!important;
+    padding:.875rem .75rem!important;
     border-radius:.875rem!important
+  }
+  /* Right col header: force wrap lebih awal */
+  #rightCol h2{font-size:1rem!important}
+  #rightCol button[onclick="openTransactionModal()"]{
+    padding:.625rem 1rem!important;
+    font-size:.875rem!important;
+    border-radius:.625rem!important
   }
   
   /* Transaction header: stack vertikal */
@@ -269,8 +279,13 @@ span.flatpickr-weekday{
   .search-wrap{padding:.5rem .75rem!important}
   
   /* Table: font lebih kecil */
-  #transactionBody td{padding:.625rem .5rem!important;font-size:.8rem!important}
-  thead th{padding:.625rem .5rem!important}
+  #transactionBody td{padding:.5rem .375rem!important;font-size:.8rem!important}
+  thead th{padding:.5rem .375rem!important;font-size:.6rem!important}
+  /* Sembunyikan kolom Aksi di mobile - edit/hapus via long-press atau tombol inline */
+  #transactionBody td:last-child,
+  thead th:last-child{display:none!important}
+  /* Kolom tanggal lebih kecil */
+  #transactionBody td:first-child{font-size:.7rem!important;white-space:nowrap}
   
   /* Pocket list: kurangi gap */
   #pocketList{gap:.5rem!important}
@@ -348,7 +363,7 @@ span.flatpickr-weekday{
       <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05);min-height:600px;display:flex;flex-direction:column">
 
         <!-- Table header row -->
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #f3f4f6">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem;margin-bottom:1.25rem;padding-bottom:.875rem;border-bottom:1px solid #f3f4f6">
           <div>
             <h2 id="currentPocketTitle" style="font-weight:700;font-size:1.25rem;color:#1f2937">Semua Transaksi</h2>
             <p id="currentPocketDesc" style="font-size:.875rem;color:#6b7280">Riwayat arus kas Anda</p>
