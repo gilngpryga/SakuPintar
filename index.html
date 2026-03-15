@@ -1,275 +1,526 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SakuPintar - Money Management</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4F46E5">
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SakuPintar">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    
-    <!-- Library CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Flatpickr CSS untuk Kalender Modern -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    
-    <!-- Library JS (Script bahasa Indonesia eksternal dihapus agar tidak error) -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SakuPintar - Money Management</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#4F46E5">
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+<!-- iOS Safari PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SakuPintar">
+<!-- apple-touch-icon tanpa sizes untuk kompatibilitas iOS lama -->
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="./icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        .animate-shake { animation: shake 0.3s ease-in-out; }
-        .input-error {
-            border-color: #f43f5e !important;
-            background-color: #fff1f2 !important;
-        }
-        .input-error:focus { box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.2); }
-        
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
+<!-- Android / Chrome -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="SakuPintar">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
+<style>
+*,::before,::after{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+html{line-height:1.5;-webkit-text-size-adjust:100%}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f8fafc;min-height:100vh;padding-bottom:80px}
+p{text-align:justify}
+.text-center{text-align:center!important}
+button,input,select,textarea{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:100%;color:inherit;background:transparent;border:none}
+button{cursor:pointer}
+table{border-collapse:collapse;width:100%;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+img,svg,canvas{display:block}
 
-        /* Kustomisasi Tema Kalender Flatpickr agar warnanya Indigo */
-        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
-            background: #4F46E5 !important;
-            border-color: #4F46E5 !important;
-        }
-        .flatpickr-calendar {
-            border-radius: 16px !important;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
-            border: none !important;
-            padding: 10px !important;
-        }
-    </style>
+/* Hanya class yang dipakai di JS-generated HTML dan animasi */
+.hidden{display:none!important}
+.input-error{border-color:#f43f5e!important;background:#fff1f2!important}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.animate-shake{animation:shake .3s ease-in-out}
+.icon{display:inline-block;vertical-align:-.125em;flex-shrink:0}
+.icon-xs{width:.75rem;height:.75rem}
+.icon-sm{width:.875rem;height:.875rem}
+.icon-md{width:1.125rem;height:1.125rem}
+.icon-lg{width:1.5rem;height:1.5rem}
+.rotate-180{transform:rotate(180deg)}
+.pocket-item{padding:.75rem;border-radius:1rem;cursor:pointer;border:2px solid #f3f4f6;background:#fff;position:relative;display:flex;align-items:center;gap:.625rem}
+.pocket-item.active{border-color:#4f46e5;background:rgba(238,242,255,.5)}
+.stat-card{background:#fff;padding:1.25rem;border-radius:1.5rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05);position:relative;overflow:hidden}
+.stat-card-primary{background:#4f46e5;color:#fff}
+.stat-card-danger{background:#e11d48;color:#fff}
+.stat-deco{position:absolute;right:-10px;top:-10px;width:6rem;height:6rem;border-radius:9999px;opacity:.5}
+.stat-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;position:relative;z-index:1}
+.stat-value{font-size:1.4rem;font-weight:700;position:relative;z-index:1}
+.ctx-menu{position:absolute;right:.5rem;top:3.5rem;background:#fff;border:1px solid #f3f4f6;border-radius:1rem;box-shadow:0 10px 25px rgba(0,0,0,.12);z-index:50;min-width:10rem;overflow:hidden;opacity:0;transform:scale(.95) translateY(-4px);transition:opacity .15s,transform .15s;transform-origin:top right;pointer-events:none}
+.ctx-menu.open{opacity:1;transform:scale(1) translateY(0);pointer-events:auto}
+
+/* Flatpickr overrides */
+/* ── Flatpickr redesign ── */
+.flatpickr-calendar{
+  border-radius:1.25rem!important;
+  box-shadow:0 20px 60px rgba(79,70,229,.15),0 4px 16px rgba(0,0,0,.08)!important;
+  border:1px solid #e0e7ff!important;
+  padding:1rem!important;
+  width:320px!important;
+  max-width:calc(100vw - 2rem)!important;
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif!important
+}
+
+/* Header kalender: container baru kita */
+.flatpickr-months{
+  padding:.25rem 0 .75rem!important;
+  overflow:visible!important
+}
+/* fp-header: row dua pill berdampingan */
+.fp-header{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  width:100%
+}
+/* fp-pill: satu pill ‹ label › */
+.fp-pill{
+  display:inline-flex;
+  align-items:center;
+  background:#eef2ff;
+  border-radius:2rem;
+  height:1.875rem;
+  padding:0 .375rem;
+  gap:0
+}
+/* Label teks di dalam pill */
+.fp-pill-label{
+  font-size:.875rem;
+  font-weight:700;
+  color:#4338ca;
+  padding:0 .2rem;
+  min-width:4.25rem;
+  text-align:center;
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  line-height:1;
+  flex:none
+}
+.fp-pill-year{min-width:2.6rem}
+/* Tombol chevron kiri/kanan */
+.fp-pill-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:1.125rem;
+  height:1.125rem;
+  border-radius:50%;
+  cursor:pointer;
+  background:transparent;
+  border:none;
+  padding:0;
+  flex:none
+}
+.fp-pill-btn:hover{background:rgba(79,70,229,.18)}
+/* Chevron via border trick */
+.fp-chev{
+  display:block;
+  width:.32rem;
+  height:.32rem;
+  border-style:solid;
+  border-color:#4338ca;
+  border-width:0
+}
+.fp-chev-left{
+  border-left-width:1.75px;
+  border-bottom-width:1.75px;
+  transform:rotate(45deg);
+  margin-left:.1rem
+}
+.fp-chev-right{
+  border-right-width:1.75px;
+  border-top-width:1.75px;
+  transform:rotate(45deg);
+  margin-right:.1rem
+}
+
+/* Sembunyikan SEMUA elemen flatpickr asli di area header */
+.flatpickr-prev-month,
+.flatpickr-next-month,
+.flatpickr-month,
+.flatpickr-current-month,
+select.flatpickr-monthDropdown-months,
+.numInputWrapper{
+  display:none!important
+}
+
+/* ── Grid tanggal ── */
+.flatpickr-innerContainer,.flatpickr-rContainer{width:100%!important}
+.flatpickr-days,.dayContainer{
+  width:100%!important;
+  min-width:100%!important;
+  max-width:100%!important
+}
+span.flatpickr-weekday{
+  background:transparent!important;
+  color:#a5b4fc!important;
+  font-size:.6875rem!important;
+  font-weight:700!important;
+  text-transform:uppercase!important;
+  letter-spacing:.04em!important;
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif!important
+}
+.flatpickr-weekdays{background:transparent!important;margin-bottom:.25rem!important}
+.flatpickr-day{
+  border-radius:.75rem!important;
+  font-size:.8125rem!important;
+  font-weight:500!important;
+  color:#374151!important;
+  border:none!important;
+  line-height:2.25rem!important;
+  height:2.25rem!important;
+  max-width:calc(100%/7)!important;
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif!important
+}
+.flatpickr-day:hover{background:#e0e7ff!important;color:#4338ca!important}
+.flatpickr-day.today{
+  background:#e0e7ff!important;
+  color:#4338ca!important;
+  font-weight:700!important;
+  border:none!important
+}
+.flatpickr-day.today::before{display:none!important}
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange{
+  background:#4f46e5!important;
+  border-color:#4f46e5!important;
+  color:#fff!important;
+  font-weight:700!important;
+  box-shadow:0 4px 12px rgba(79,70,229,.35)!important;
+  border-radius:.75rem!important
+}
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay{color:#d1d5db!important}
+
+/* altInput (yang tampil ke user) — pastikan tidak bertumpuk dengan ikon */
+/* altInput Flatpickr: icon di kanan, tidak bertumpuk teks */
+#txDateWrap{position:relative;display:flex;align-items:stretch}
+#txDateWrap>span{position:absolute;right:1rem;top:50%;transform:translateY(-50%);color:#6366f1;pointer-events:none;z-index:2;display:flex;align-items:center}
+#txDateWrap input{
+  width:100%!important;
+  border:1px solid #e5e7eb!important;
+  background:#f9fafb!important;
+  border-radius:.75rem!important;
+  padding:.75rem 3rem .75rem 1rem!important;
+  outline:none!important;
+  font-weight:600!important;
+  color:#1f2937!important;
+  cursor:pointer!important;
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif!important;
+  font-size:.9375rem!important;
+  line-height:1.5!important
+}
+#txDateWrap input.input-error{border-color:#f43f5e!important;background:#fff1f2!important}
+
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}
+</style>
 </head>
-<body class="bg-gray-50 min-h-screen pb-20">
+<body>
 
-    <nav class="bg-indigo-600 text-white shadow-lg sticky top-0 z-40" style="padding-top: env(safe-area-inset-top);">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold flex items-center gap-2">
-                <i class="fas fa-wallet"></i> SakuPintar
-            </h1>
-            <div class="flex items-center gap-3">
-                <div id="totalBalanceHeader" class="text-sm font-medium bg-indigo-700 px-4 py-2.5 rounded-full shadow-inner transition-all border border-indigo-500/50 hidden md:block">
-                    Total Saldo: Rp 0
-                </div>
-                <button onclick="toggleModal('settingsModal')" class="w-10 h-10 flex items-center justify-center bg-indigo-700 hover:bg-indigo-800 rounded-full transition-colors text-white border border-indigo-500/50 shadow-sm" title="Pengaturan Data">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
+<!-- NAV -->
+<nav style="background:#4f46e5;color:#fff;box-shadow:0 4px 6px -1px rgba(0,0,0,.1);position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top)">
+  <div style="max-width:72rem;margin:0 auto;padding:.875rem 1rem;display:flex;justify-content:space-between;align-items:center">
+    <h1 style="font-size:1.25rem;font-weight:600;display:flex;align-items:center;gap:.5rem;letter-spacing:-.02em">
+      <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><path d="M21 7H3a1 1 0 0 0-1 1v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm-1 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM3 5h15l-1.5-1.5A2 2 0 0 0 15.09 3H5a2 2 0 0 0-2 2z"/></svg>
+      SakuPintar
+    </h1>
+    <div style="display:flex;align-items:center;gap:.75rem">
+      <div id="totalBalanceHeader" style="display:none;font-size:.8rem;font-weight:600;background:#4338ca;padding:.5rem 1rem;border-radius:9999px;border:1px solid rgba(99,102,241,.5)">Total Saldo: Rp 0</div>
+      <button onclick="toggleModal('settingsModal')" style="width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;background:#4338ca;border-radius:9999px;color:#fff;border:1px solid rgba(99,102,241,.5)">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm7.94-3c0-.32-.03-.63-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.63l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54A.5.5 0 0 0 14.62 3h-3.84a.5.5 0 0 0-.5.43l-.36 2.54a7 7 0 0 0-1.62.94L5.9 6.35a.5.5 0 0 0-.61.22L3.37 9.89a.5.5 0 0 0 .12.63L5.52 12c-.04.31-.07.63-.07.94s.03.63.07.94l-2.03 1.58a.5.5 0 0 0-.12.63l1.92 3.32a.5.5 0 0 0 .61.22l2.39-.96a7 7 0 0 0 1.62.94l.36 2.54c.07.25.3.43.5.43h3.84a.5.5 0 0 0 .5-.43l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96a.5.5 0 0 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.63l-2.03-1.58c.04-.31.07-.63.07-.94z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main style="max-width:72rem;margin:0 auto;padding:2rem 1rem">
+
+  <!-- Stats -->
+  <div id="statsCards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-bottom:2rem"></div>
+
+  <!-- Body grid -->
+  <div style="display:grid;grid-template-columns:1fr;gap:2rem">
+
+    <!-- LEFT: chart + pockets (desktop: 4/12) -->
+    <div id="leftCol" style="display:flex;flex-direction:column;gap:2rem">
+
+      <!-- Chart -->
+      <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+        <h2 style="font-weight:700;color:#1f2937;font-size:1.125rem;margin-bottom:1.5rem;text-align:center">Portofolio</h2>
+        <div style="position:relative;height:14rem;display:flex;justify-content:center">
+          <canvas id="balanceChart"></canvas>
         </div>
-    </nav>
+        <p id="chartEmptyMsg" class="hidden" style="text-align:center;font-size:.75rem;color:#9ca3af;margin-top:.75rem;padding:0 1rem"></p>
+      </div>
 
-    <main class="max-w-6xl mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="statsCards"></div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-4 space-y-8">
-                <div class="glass p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h2 class="font-bold text-gray-800 text-lg mb-6 text-center">Portfolio</h2>
-                    <div class="relative h-56 w-full flex justify-center">
-                        <canvas id="balanceChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="glass p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full">
-                    <div class="flex flex-col gap-4 mb-4">
-                        <div class="flex justify-between items-center">
-                            <h2 class="font-bold text-gray-800 text-lg">Daftar Kantong</h2>
-                        </div>
-                        <button onclick="togglePocketModal()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-colors border border-indigo-100 shadow-sm">
-                            <i class="fas fa-plus-circle"></i> Kantong Baru
-                        </button>
-                    </div>
-                    <div id="pocketList" class="space-y-3 max-h-[400px] overflow-y-auto pr-2"></div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-8">
-                <div class="glass p-6 rounded-2xl shadow-sm border border-gray-100 min-h-[600px] flex flex-col">
-                    <div id="transactionHeader" class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-gray-100">
-                        <div>
-                            <h2 class="font-bold text-xl text-gray-800" id="currentPocketTitle">Semua Transaksi</h2>
-                            <p class="text-sm text-gray-500" id="currentPocketDesc">Riwayat arus kas Anda</p>
-                        </div>
-                        <button onclick="openTransactionModal()" id="addTxBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 font-bold w-full md:w-auto justify-center">
-                            <i class="fas fa-plus"></i> Transaksi Baru
-                        </button>
-                    </div>
-
-                    <div class="flex-1 border border-gray-200 rounded-xl overflow-hidden bg-white">
-                        <div class="flex items-center justify-between bg-gray-50 px-4 py-3 border-b border-gray-200">
-                            <button id="prevYearBtn" onclick="changeYear(-1)" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white hover:bg-gray-100 text-gray-600 transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-gray-200 shadow-sm">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <h3 id="yearDisplay" class="font-bold text-gray-800 text-base tracking-wide bg-white px-6 py-2 rounded-lg border border-gray-200 shadow-sm">
-                                ...
-                            </h3>
-                            <button id="nextYearBtn" onclick="changeYear(1)" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white hover:bg-gray-100 text-gray-600 transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-gray-200 shadow-sm">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse min-w-[550px]">
-                                <thead class="bg-white">
-                                    <tr class="text-gray-400 text-xs uppercase tracking-wider border-b border-gray-200">
-                                        <th class="py-4 px-4 font-bold w-24">Tanggal</th>
-                                        <th class="py-4 px-4 font-bold">Keterangan</th>
-                                        <th class="py-4 px-4 font-bold text-right">Nominal</th>
-                                        <th class="py-4 px-4 font-bold text-center w-32">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="transactionBody" class="divide-y divide-gray-100"></tbody>
-                            </table>
-                            
-                            <div id="emptyState" class="hidden py-20 flex flex-col items-center justify-center text-center bg-gray-50/50">
-                                <div class="bg-white p-6 rounded-full mb-4 shadow-sm border border-gray-100">
-                                    <i class="fas fa-folder-open text-4xl text-gray-300"></i>
-                                </div>
-                                <h3 class="text-gray-600 font-bold text-lg">Tidak ada catatan</h3>
-                                <p class="text-gray-400 text-sm mt-1">Belum ada transaksi di tahun ini.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Modals -->
-    <div id="settingsModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[60] p-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl w-full max-w-sm p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold text-gray-800">Pengaturan Data</h3>
-                <button onclick="toggleModal('settingsModal')" class="text-gray-400 hover:text-gray-600 bg-gray-100 hover:bg-gray-200 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <p class="text-sm text-gray-500 mb-6">Amankan data keuangan Anda dengan mencadangkannya ke perangkat, atau pulihkan data dari perangkat lain.</p>
-            <div class="space-y-4">
-                <button onclick="exportData()" class="w-full flex items-center justify-between bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-5 py-4 rounded-2xl font-bold transition-colors border border-indigo-100">
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-file-download text-lg"></i>
-                        <span>Export Data (Backup)</span>
-                    </div>
-                    <i class="fas fa-chevron-right text-indigo-300"></i>
-                </button>
-                <label class="w-full flex items-center justify-between bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-5 py-4 rounded-2xl font-bold transition-colors border border-emerald-100 cursor-pointer">
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-file-upload text-lg"></i>
-                        <span>Import Data (Restore)</span>
-                    </div>
-                    <i class="fas fa-chevron-right text-emerald-300"></i>
-                    <input type="file" accept="*/*" class="hidden" onchange="importData(event)">
-                </label>
-            </div>
-        </div>
+      <!-- Pocket List -->
+      <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+        <h2 style="font-weight:700;color:#1f2937;font-size:1.125rem;margin-bottom:1rem">Daftar Kantong</h2>
+        <button onclick="togglePocketModal()" style="width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem;background:#eef2ff;color:#4338ca;padding:.625rem;border-radius:.75rem;font-weight:700;font-size:.875rem;border:1px solid #e0e7ff;margin-bottom:1rem">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+          Kantong Baru
+        </button>
+        <div id="pocketList" style="display:flex;flex-direction:column;gap:.75rem;max-height:400px;overflow-y:auto;padding-right:.25rem"></div>
+      </div>
     </div>
 
-    <div id="pocketModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[60] p-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl w-full max-w-md p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300">
-            <h3 class="text-xl font-bold mb-6 text-gray-800">Buat Kantong Baru</h3>
-            <div class="space-y-5">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nama Kantong</label>
-                    <input type="text" id="pocketName" placeholder="Contoh: Tabungan Liburan" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl px-4 py-3 outline-none transition-all font-medium">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Ikon</label>
-                    <div id="iconPicker" class="flex flex-wrap gap-2"></div>
-                </div>
-            </div>
-            <div class="mt-8 flex gap-3">
-                <button type="button" onclick="toggleModal('pocketModal')" class="flex-1 px-4 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl font-bold transition-colors">Batal</button>
-                <button type="button" onclick="addPocket()" class="flex-1 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-colors shadow-lg shadow-indigo-600/30">Simpan Kantong</button>
-            </div>
+    <!-- RIGHT: transaction table (desktop: 8/12) -->
+    <div id="rightCol">
+      <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05);min-height:600px;display:flex;flex-direction:column">
+
+        <!-- Table header row -->
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #f3f4f6">
+          <div>
+            <h2 id="currentPocketTitle" style="font-weight:700;font-size:1.25rem;color:#1f2937">Semua Transaksi</h2>
+            <p id="currentPocketDesc" style="font-size:.875rem;color:#6b7280">Riwayat arus kas Anda</p>
+          </div>
+          <button onclick="openTransactionModal()" style="display:flex;align-items:center;gap:.5rem;background:#4f46e5;color:#fff;padding:.75rem 1.25rem;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(79,70,229,.3)">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Transaksi Baru
+          </button>
         </div>
-    </div>
 
-    <div id="transactionModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[60] p-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl w-full max-w-md p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto" style="padding-bottom: max(2rem, env(safe-area-inset-bottom));">
-            <h3 id="txModalTitle" class="text-xl font-bold mb-6 text-gray-800">Tambah Transaksi</h3>
-            <form id="txForm" class="space-y-5" onsubmit="event.preventDefault(); saveTransaction();">
-                <div class="grid grid-cols-2 gap-2 bg-gray-100 p-1.5 rounded-2xl relative">
-                    <button type="button" onclick="setTxType('in')" id="btnTypeIn" class="py-2.5 rounded-xl font-bold transition-all bg-white text-emerald-600 shadow-sm border border-gray-200/50">Pemasukan</button>
-                    <button type="button" onclick="setTxType('out')" id="btnTypeOut" class="py-2.5 rounded-xl font-bold transition-all text-gray-500 hover:text-gray-700 border border-transparent">Pengeluaran</button>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nominal (Rp)</label>
-                    <div class="relative">
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">Rp</span>
-                        <input type="number" id="txAmount" placeholder="0" min="1" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl pl-12 pr-4 py-3 outline-none transition-all text-lg font-bold text-gray-800">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Pilih Kantong</label>
-                    <div class="relative" id="customPocketSelectContainer">
-                        <input type="hidden" id="txPocketId">
-                        <button type="button" id="customPocketSelectToggle" onclick="toggleCustomSelect()" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl px-4 py-3 outline-none transition-all font-medium flex items-center justify-between text-left text-gray-800">
-                            <span id="customPocketSelectLabel" class="flex items-center gap-2 text-gray-500">Pilih Kantong...</span>
-                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300" id="customPocketSelectIcon"></i>
-                        </button>
-                        <div id="customPocketSelectMenu" class="absolute w-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-xl z-[70] hidden opacity-0 translate-y-[-10px] transition-all duration-200 max-h-60 overflow-y-auto custom-scroll p-1"></div>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Keterangan</label>
-                    <input type="text" id="txNote" placeholder="Contoh: Makan Siang / Gaji" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl px-4 py-3 outline-none transition-all font-medium text-gray-800">
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Tanggal</label>
-                    <div class="relative flex items-center">
-                        <div class="absolute left-4 text-indigo-500 pointer-events-none flex items-center z-10">
-                            <i class="fas fa-calendar-alt text-lg"></i>
-                        </div>
-                        <input type="text" id="txDate" placeholder="Pilih Tanggal" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl pl-12 pr-4 py-3 outline-none transition-all font-bold text-gray-800 cursor-pointer">
-                    </div>
-                </div>
+        <!-- Table container -->
+        <div style="flex:1;border:1px solid #e5e7eb;border-radius:.75rem;overflow:hidden;background:#fff">
 
-                <div class="mt-8 flex gap-3 pt-2">
-                    <button type="button" onclick="toggleModal('transactionModal')" class="flex-1 px-4 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl font-bold transition-colors">Batal</button>
-                    <button type="submit" class="flex-1 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-colors shadow-lg shadow-indigo-600/30">Simpan Data</button>
-                </div>
-            </form>
-        </div>
-    </div>
+          <!-- Year nav -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;background:#f9fafb;border-bottom:1px solid #f3f4f6">
+            <button id="prevYearBtn" onclick="changeYear(-1)" disabled style="width:2.25rem;height:2.25rem;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:#fff;color:#6366f1;border:1px solid #e0e7ff;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+              <svg class="icon icon-xs" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11L5 7L9 3"/></svg>
+            </button>
+            <span id="yearDisplay" style="font-weight:700;color:#4338ca;background:#fff;padding:.5rem 1.5rem;border-radius:9999px;border:1px solid #e0e7ff;box-shadow:0 1px 2px rgba(0,0,0,.05);font-size:.9375rem;letter-spacing:.05em;min-width:6rem;text-align:center">...</span>
+            <button id="nextYearBtn" onclick="changeYear(1)" disabled style="width:2.25rem;height:2.25rem;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:#fff;color:#6366f1;border:1px solid #e0e7ff;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+              <svg class="icon icon-xs" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3L9 7L5 11"/></svg>
+            </button>
+          </div>
 
-    <div id="confirmModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[80] p-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 text-center">
-            <div class="w-20 h-20 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-5 text-4xl shadow-inner">
-                <i class="fas fa-exclamation-triangle"></i>
+          <!-- Search -->
+          <div style="padding:.75rem 1rem;border-bottom:1px solid #f3f4f6">
+            <div style="position:relative;display:flex;align-items:center">
+              <span style="position:absolute;left:.875rem;color:#9ca3af;display:flex;pointer-events:none">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              </span>
+              <input type="text" id="searchInput" oninput="handleSearch(event)" placeholder="Cari transaksi..." style="width:100%;background:#fff;border:1px solid #e5e7eb;border-radius:.75rem;padding:.625rem 2.5rem;font-size:.875rem;outline:none;color:#374151;font-weight:500">
+              <button id="clearSearchBtn" onclick="clearSearch()" class="hidden" style="position:absolute;right:.875rem;color:#9ca3af;display:flex">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+              </button>
             </div>
-            <h3 id="confirmTitle" class="text-xl font-bold mb-2 text-gray-800">Konfirmasi</h3>
-            <p id="confirmMessage" class="text-gray-500 text-sm mb-8 px-2">Apakah Anda yakin?</p>
-            <div class="flex gap-3">
-                <button type="button" id="btnConfirmCancel" class="flex-1 px-4 py-3 border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-xl font-bold transition-colors">Batal</button>
-                <button type="button" id="btnConfirmOk" class="flex-1 px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold transition-colors shadow-md shadow-rose-500/30">Ya, Setuju!</button>
-            </div>
-        </div>
-    </div>
+          </div>
 
-    <script src="app.js"></script>
+          <!-- Table scroll wrapper -->
+          <div style="overflow-x:auto">
+            <table style="width:100%;min-width:550px;border-collapse:collapse">
+              <thead style="background:#f9fafb;border-bottom:1px solid #e5e7eb">
+                <tr>
+                  <th style="padding:1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;text-align:left;width:6rem">Tanggal</th>
+                  <th style="padding:1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;text-align:left">Keterangan</th>
+                  <th style="padding:1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;text-align:right">Nominal</th>
+                  <th style="padding:1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;text-align:center;width:8rem">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="transactionBody"></tbody>
+            </table>
+
+            <!-- Empty state -->
+            <div id="emptyState" class="hidden" style="padding:5rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+              <div style="background:#fff;padding:1.5rem;border-radius:9999px;margin-bottom:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+                <svg style="width:2.5rem;height:2.5rem;color:#d1d5db" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10z"/></svg>
+              </div>
+              <h3 id="emptyTitle" style="color:#4b5563;font-weight:700;font-size:1.125rem">Tidak ada catatan</h3>
+              <p id="emptyDesc" style="color:#9ca3af;font-size:.875rem;margin-top:.25rem;text-align:center">Belum ada transaksi di tahun ini.</p>
+              <button id="emptyAction" onclick="openTransactionModal()" style="margin-top:1.25rem;display:flex;align-items:center;gap:.5rem;background:#4f46e5;color:#fff;padding:.75rem 1.5rem;border-radius:.75rem;font-weight:700;font-size:.875rem;box-shadow:0 4px 12px rgba(79,70,229,.2)">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                Catat Transaksi Pertama
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== MODALS ===== -->
+<!-- Semua modal pakai display:none via .hidden, dibuka JS dengan inline style -->
+
+<!-- Settings -->
+<div id="settingsModal" class="hidden" style="position:fixed;inset:0;background:rgba(17,24,39,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:60;padding:1rem">
+  <div id="settingsBox" style="background:#fff;border-radius:1.5rem;width:100%;max-width:24rem;padding:1.5rem;box-shadow:0 25px 50px rgba(0,0,0,.25)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+      <h3 style="font-size:1.25rem;font-weight:700;color:#1f2937">Pengaturan Data</h3>
+      <button onclick="toggleModal('settingsModal')" style="width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;background:#f3f4f6;border-radius:9999px;color:#6b7280">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+    </div>
+    <p style="font-size:.875rem;color:#6b7280;margin-bottom:1.5rem;text-align:justify">Amankan data keuangan Anda dengan mencadangkannya, atau pulihkan dari cadangan sebelumnya.</p>
+    <div style="display:flex;flex-direction:column;gap:.75rem">
+      <button onclick="exportData()" style="display:flex;align-items:center;justify-content:space-between;background:#eef2ff;color:#4338ca;padding:1rem 1.25rem;border-radius:1rem;font-weight:700;border:1px solid #e0e7ff;width:100%">
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Export Data (Backup)
+        </div>
+        <svg class="icon icon-sm" style="color:#a5b4fc" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
+      <label style="display:flex;align-items:center;justify-content:space-between;background:#ecfdf5;color:#047857;padding:1rem 1.25rem;border-radius:1rem;font-weight:700;border:1px solid #d1fae5;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+          Import Data (Restore)
+        </div>
+        <svg class="icon icon-sm" style="color:#6ee7b7" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        <input type="file" accept="*/*" style="display:none" onchange="importData(event)">
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- Add Pocket -->
+<div id="pocketModal" class="hidden" style="position:fixed;inset:0;background:rgba(17,24,39,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:60;padding:1rem">
+  <div id="pocketBox" style="background:#fff;border-radius:1.5rem;width:100%;max-width:28rem;padding:1.5rem;box-shadow:0 25px 50px rgba(0,0,0,.25)">
+    <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1.5rem;color:#1f2937">Buat Kantong Baru</h3>
+    <div style="display:flex;flex-direction:column;gap:1.25rem">
+      <div>
+        <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Nama Kantong</label>
+        <input type="text" id="pocketName" placeholder="Contoh: Tabungan Liburan" style="width:100%;border:1px solid #e5e7eb;background:#f9fafb;border-radius:.75rem;padding:.75rem 1rem;outline:none;font-weight:500;color:#1f2937">
+      </div>
+      <div>
+        <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.5rem">Pilih Ikon</label>
+        <div id="iconPicker" style="display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;max-height:9rem;overflow-y:auto;padding:.25rem .125rem"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:.75rem;margin-top:2rem">
+      <button type="button" onclick="toggleModal('pocketModal')" style="flex:1;padding:.75rem;border:1px solid #e5e7eb;color:#4b5563;border-radius:.75rem;font-weight:700;background:#fff">Batal</button>
+      <button type="button" onclick="addPocket()" style="flex:1;padding:.75rem;background:#4f46e5;color:#fff;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(79,70,229,.3)">Simpan Kantong</button>
+    </div>
+  </div>
+</div>
+
+<!-- Transaction -->
+<div id="transactionModal" class="hidden" style="position:fixed;inset:0;background:rgba(17,24,39,.6);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;z-index:60;padding:1rem;overflow-y:auto">
+  <div id="transactionBox" style="background:#fff;border-radius:1.5rem;width:100%;max-width:28rem;padding:1.5rem;box-shadow:0 25px 50px rgba(0,0,0,.25);margin:auto;flex-shrink:0">
+    <h3 id="txModalTitle" style="font-size:1.25rem;font-weight:700;margin-bottom:1.5rem;color:#1f2937">Tambah Transaksi</h3>
+    <form id="txForm" style="display:flex;flex-direction:column;gap:1.25rem" onsubmit="event.preventDefault();saveTransaction()">
+
+      <!-- Type toggle -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;background:#f3f4f6;padding:.375rem;border-radius:1rem">
+        <button type="button" id="btnTypeIn" onclick="setTxType('in')" style="padding:.625rem;border-radius:.75rem;font-weight:700;background:#fff;color:#059669;box-shadow:0 1px 2px rgba(0,0,0,.05);border:1px solid rgba(229,231,235,.5);min-height:2.5rem;width:100%">Pemasukan</button>
+        <button type="button" id="btnTypeOut" onclick="setTxType('out')" style="padding:.625rem;border-radius:.75rem;font-weight:700;color:#6b7280;border:1px solid transparent;background:#f3f4f6;min-height:2.5rem;width:100%">Pengeluaran</button>
+      </div>
+
+      <!-- Amount -->
+      <div>
+        <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Nominal (Rp)</label>
+        <div style="position:relative">
+          <span style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#9ca3af;font-weight:600;pointer-events:none">Rp</span>
+          <input type="text" inputmode="numeric" id="txAmount" placeholder="0" style="width:100%;border:1px solid #e5e7eb;background:#f9fafb;border-radius:.75rem;padding:.75rem 1rem .75rem 3rem;outline:none;font-size:1.125rem;font-weight:700;color:#1f2937">
+        </div>
+      </div>
+
+      <!-- Pocket select -->
+      <div>
+        <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Pilih Kantong</label>
+        <div style="position:relative" id="customPocketSelectContainer">
+          <input type="hidden" id="txPocketId">
+          <button type="button" id="customPocketSelectToggle" onclick="toggleCustomSelect()" style="width:100%;border:1px solid #e5e7eb;background:#f9fafb;border-radius:.75rem;padding:.75rem 1rem;outline:none;font-weight:500;display:flex;align-items:center;justify-content:space-between;text-align:left;color:#1f2937">
+            <span id="customPocketSelectLabel" style="display:flex;align-items:center;gap:.5rem;color:#9ca3af">Pilih Kantong...</span>
+            <svg id="customPocketSelectIcon" class="icon icon-sm" style="color:#9ca3af;transition:transform .3s;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <div id="customPocketSelectMenu" class="hidden" style="position:absolute;width:100%;margin-top:.5rem;background:#fff;border:1px solid #f3f4f6;border-radius:1rem;box-shadow:0 10px 25px rgba(0,0,0,.12);z-index:70;max-height:15rem;overflow-y:auto;padding:.25rem"></div>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div>
+        <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Keterangan</label>
+        <input type="text" id="txNote" placeholder="Contoh: Makan Siang / Gaji" style="width:100%;border:1px solid #e5e7eb;background:#f9fafb;border-radius:.75rem;padding:.75rem 1rem;outline:none;font-weight:500;color:#1f2937">
+      </div>
+
+      <!-- Date -->
+      <div>
+        <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Tanggal</label>
+        <div id="txDateWrap">
+          <input type="text" id="txDate" placeholder="Pilih tanggal...">
+          <span style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);color:#6366f1;display:flex;align-items:center;pointer-events:none">
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3h-1V1h-2v2H7V1H5v2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H4V8h16v13z"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:.75rem;padding-top:.5rem">
+        <button type="button" onclick="toggleModal('transactionModal')" style="flex:1;padding:.75rem;border:1px solid #e5e7eb;color:#4b5563;border-radius:.75rem;font-weight:700;background:#fff">Batal</button>
+        <button type="submit" style="flex:1;padding:.75rem;background:#4f46e5;color:#fff;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(79,70,229,.3)">Simpan Data</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Confirm -->
+<div id="confirmModal" class="hidden" style="position:fixed;inset:0;background:rgba(17,24,39,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:80;padding:1rem">
+  <div id="confirmBox" style="background:#fff;border-radius:1.5rem;width:100%;max-width:24rem;padding:1.5rem;box-shadow:0 25px 50px rgba(0,0,0,.25);text-align:center">
+    <div style="width:5rem;height:5rem;background:#ffe4e6;color:#e11d48;border-radius:9999px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem">
+      <svg style="width:2rem;height:2rem" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+    </div>
+    <h3 id="confirmTitle" style="font-size:1.25rem;font-weight:700;margin-bottom:.5rem;color:#1f2937">Konfirmasi</h3>
+    <p id="confirmMessage" style="color:#6b7280;font-size:.875rem;margin-bottom:2rem;padding:0 .5rem">Apakah Anda yakin?</p>
+    <div style="display:flex;gap:.75rem">
+      <button type="button" id="btnConfirmCancel" style="flex:1;padding:.75rem;border:1px solid #e5e7eb;color:#374151;border-radius:.75rem;font-weight:700;background:#fff">Batal</button>
+      <button type="button" id="btnConfirmOk" style="flex:1;padding:.75rem;background:#e11d48;color:#fff;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(225,29,72,.3)">Ya, Setuju!</button>
+    </div>
+  </div>
+</div>
+
+<!-- Responsive layout: desktop 2 cols -->
+<style>
+@media(min-width:1024px){
+  #mainGrid{grid-template-columns:4fr 8fr !important}
+}
+</style>
+<script>
+// Apply 2-col layout on desktop
+(function(){
+  var main = document.querySelector('[style*="grid-template-columns:1fr"]');
+  if(main) main.id = 'mainGrid';
+  function applyLayout(){
+    var g = document.getElementById('mainGrid');
+    if(!g) return;
+    if(window.innerWidth >= 1024){
+      g.style.gridTemplateColumns = '1fr 2fr';
+    } else {
+      g.style.gridTemplateColumns = '1fr';
+    }
+  }
+  applyLayout();
+  window.addEventListener('resize', applyLayout);
+})();
+
+// Show balance header on md+
+(function(){
+  function checkWidth(){
+    var el = document.getElementById('totalBalanceHeader');
+    if(el) el.style.display = window.innerWidth >= 768 ? 'block' : 'none';
+  }
+  checkWidth();
+  window.addEventListener('resize', checkWidth);
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+<script src="icons.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
