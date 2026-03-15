@@ -18,72 +18,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
 <style>
-/* ── Reset ── */
-*,::before,::after{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
 html{line-height:1.5;-webkit-text-size-adjust:100%}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f8fafc;min-height:100vh;padding-bottom:5rem}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f8fafc;min-height:100vh;padding-bottom:80px}
 button,input,select,textarea{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:100%;color:inherit;background:transparent;border:none}
 button{cursor:pointer}
-table,th,td{border-collapse:collapse;width:100%;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+table{border-collapse:collapse;width:100%;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
 img,svg,canvas{display:block}
-p{text-align:justify}
 
-/* ── Utility ── */
+/* Hanya class yang dipakai di JS-generated HTML dan animasi */
 .hidden{display:none!important}
 .input-error{border-color:#f43f5e!important;background:#fff1f2!important}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 .animate-shake{animation:shake .3s ease-in-out}
-
-/* ── Icons ── */
 .icon{display:inline-block;vertical-align:-.125em;flex-shrink:0}
 .icon-xs{width:.75rem;height:.75rem}
 .icon-sm{width:.875rem;height:.875rem}
 .icon-md{width:1.125rem;height:1.125rem}
 .icon-lg{width:1.5rem;height:1.5rem}
-
-/* ── Component classes (dipakai JS-generated HTML) ── */
+.rotate-180{transform:rotate(180deg)}
+.pocket-item{padding:.75rem;border-radius:1rem;cursor:pointer;border:2px solid #f3f4f6;background:#fff;position:relative;display:flex;align-items:center;gap:.625rem}
+.pocket-item.active{border-color:#4f46e5;background:rgba(238,242,255,.5)}
 .stat-card{background:#fff;padding:1.25rem;border-radius:1.5rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05);position:relative;overflow:hidden}
 .stat-card-primary{background:#4f46e5;color:#fff}
 .stat-card-danger{background:#e11d48;color:#fff}
 .stat-deco{position:absolute;right:-10px;top:-10px;width:6rem;height:6rem;border-radius:9999px;opacity:.5}
 .stat-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;position:relative;z-index:1}
 .stat-value{font-size:1.4rem;font-weight:700;position:relative;z-index:1}
-
-.pocket-item{padding:.75rem;border-radius:1rem;cursor:pointer;border:2px solid #f3f4f6;background:#fff;position:relative;display:flex;align-items:center;gap:.625rem;transition:border-color .15s}
-.pocket-item.active{border-color:#4f46e5;background:rgba(238,242,255,.5)}
-
 .ctx-menu{position:absolute;right:.5rem;top:3.5rem;background:#fff;border:1px solid #f3f4f6;border-radius:1rem;box-shadow:0 10px 25px rgba(0,0,0,.12);z-index:50;min-width:10rem;overflow:hidden;opacity:0;transform:scale(.95) translateY(-4px);transition:opacity .15s,transform .15s;transform-origin:top right;pointer-events:none}
 .ctx-menu.open{opacity:1;transform:scale(1) translateY(0);pointer-events:auto}
 
-::-webkit-scrollbar{width:6px;height:6px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}
-
-/* ── Flatpickr: kalender ── */
-.flatpickr-calendar{
-  border-radius:1.25rem!important;
-  box-shadow:0 20px 60px rgba(79,70,229,.15),0 4px 16px rgba(0,0,0,.08)!important;
-  border:1px solid #e0e7ff!important;
-  padding:1rem!important;
-  width:320px!important;
-  max-width:calc(100vw - 2rem)!important;
-  font-family:'Plus Jakarta Sans',system-ui,sans-serif!important
-}
-
-/* Header: semua elemen asli disembunyikan, diganti custom fp-header via JS */
-.flatpickr-months{
-  padding:.25rem 0 .75rem!important;
-  overflow:visible!important
-}
-.flatpickr-prev-month,
-.flatpickr-next-month,
-.flatpickr-month,
-.flatpickr-current-month,
-select.flatpickr-monthDropdown-months,
-.numInputWrapper{display:none!important}
-
-/* fp-header: dua pill berdampingan ‹ Maret › ‹ 2026 › */
-.fp-header{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.1rem 0}
+/* Flatpickr overrides */
+.flatpickr-calendar{border-radius:1.25rem!important;box-shadow:0 20px 60px rgba(79,70,229,.15),0 4px 16px rgba(0,0,0,.08)!important;border:1px solid #e0e7ff!important;padding:1rem!important;width:320px!important;max-width:calc(100vw - 2rem)!important;font-family:'Plus Jakarta Sans',system-ui,sans-serif!important}
+.flatpickr-months{padding:.25rem 0 .75rem!important;overflow:visible!important}
+.flatpickr-prev-month,.flatpickr-next-month,.flatpickr-month,.flatpickr-current-month,select.flatpickr-monthDropdown-months,.numInputWrapper{display:none!important}
+.fp-header{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%}
 .fp-pill{display:inline-flex;align-items:center;background:#eef2ff;border-radius:2rem;height:1.875rem;padding:0 .375rem;gap:0}
 .fp-pill-label{font-size:.875rem;font-weight:700;color:#4338ca;padding:0 .2rem;min-width:4.25rem;text-align:center;font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1;flex:none}
 .fp-pill-year{min-width:2.6rem}
@@ -92,12 +61,8 @@ select.flatpickr-monthDropdown-months,
 .fp-chev{display:block;width:.32rem;height:.32rem;border-style:solid;border-color:#4338ca;border-width:0}
 .fp-chev-left{border-left-width:1.75px;border-bottom-width:1.75px;transform:rotate(45deg);margin-left:.1rem}
 .fp-chev-right{border-right-width:1.75px;border-top-width:1.75px;transform:rotate(45deg);margin-right:.1rem}
-
-/* Hari dalam seminggu */
 .flatpickr-weekdays{background:transparent!important;margin-bottom:.25rem!important}
 span.flatpickr-weekday{background:transparent!important;color:#a5b4fc!important;font-size:.6875rem!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.04em!important;font-family:'Plus Jakarta Sans',system-ui,sans-serif!important}
-
-/* Grid tanggal */
 .flatpickr-innerContainer,.flatpickr-rContainer{width:100%!important}
 .flatpickr-days,.dayContainer{width:100%!important;min-width:100%!important;max-width:100%!important}
 .flatpickr-day{border-radius:.75rem!important;font-size:.8125rem!important;font-weight:500!important;color:#374151!important;border:none!important;line-height:2.25rem!important;height:2.25rem!important;max-width:calc(100%/7)!important;font-family:'Plus Jakarta Sans',system-ui,sans-serif!important}
@@ -107,44 +72,9 @@ span.flatpickr-weekday{background:transparent!important;color:#a5b4fc!important;
 .flatpickr-day.selected,.flatpickr-day.selected:hover{background:#4f46e5!important;border-color:#4f46e5!important;color:#fff!important;font-weight:700!important;box-shadow:0 4px 12px rgba(79,70,229,.35)!important}
 .flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay{color:#d1d5db!important}
 
-/* altInput (input tanggal yang tampil ke user) */
-#txDateWrap{position:relative;display:flex;align-items:stretch}
-#txDateWrap>span{position:absolute;right:1rem;top:50%;transform:translateY(-50%);color:#6366f1;pointer-events:none;z-index:2;display:flex;align-items:center}
-#txDateWrap input{
-  width:100%!important;border:1px solid #e5e7eb!important;background:#f9fafb!important;
-  border-radius:.75rem!important;padding:.75rem 3rem .75rem 1rem!important;
-  outline:none!important;font-weight:600!important;color:#1f2937!important;
-  cursor:pointer!important;font-family:'Plus Jakarta Sans',system-ui,sans-serif!important;
-  font-size:.9375rem!important;line-height:1.5!important
-}
-#txDateWrap input:focus{border-color:#6366f1!important;box-shadow:0 0 0 4px rgba(99,102,241,.1)!important}
-#txDateWrap input.input-error{border-color:#f43f5e!important;background:#fff1f2!important}
-
-/* ── Layout responsif ── */
-.main-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:1.5rem
-}
-@media(min-width:1024px){
-  .main-grid{grid-template-columns:1fr 2fr}
-}
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:1rem;
-  margin-bottom:1.5rem
-}
-@media(min-width:768px){
-  .stats-grid{gap:1.5rem;margin-bottom:2rem}
-}
-
-/* Card umum */
-.card{background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)}
-
-/* ── Modal ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(17,24,39,.6);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;z-index:60;padding:1rem;overflow-y:auto}
-.modal-box{background:#fff;border-radius:1.5rem;width:100%;box-shadow:0 25px 50px rgba(0,0,0,.25);margin:auto;flex-shrink:0}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}
 </style>
 </head>
 <body>
@@ -152,115 +82,116 @@ span.flatpickr-weekday{background:transparent!important;color:#a5b4fc!important;
 <!-- NAV -->
 <nav style="background:#4f46e5;color:#fff;box-shadow:0 4px 6px -1px rgba(0,0,0,.1);position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top)">
   <div style="max-width:72rem;margin:0 auto;padding:.875rem 1rem;display:flex;justify-content:space-between;align-items:center">
-    <h1 style="font-size:1.25rem;font-weight:600;display:flex;align-items:center;gap:.5rem;letter-spacing:-.02em">
+    <h1 style="font-size:1.25rem;font-weight:700;display:flex;align-items:center;gap:.5rem">
       <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><path d="M21 7H3a1 1 0 0 0-1 1v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm-1 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM3 5h15l-1.5-1.5A2 2 0 0 0 15.09 3H5a2 2 0 0 0-2 2z"/></svg>
       SakuPintar
     </h1>
     <div style="display:flex;align-items:center;gap:.75rem">
       <div id="totalBalanceHeader" style="display:none;font-size:.8rem;font-weight:600;background:#4338ca;padding:.5rem 1rem;border-radius:9999px;border:1px solid rgba(99,102,241,.5)">Total Saldo: Rp 0</div>
       <button onclick="toggleModal('settingsModal')" style="width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;background:#4338ca;border-radius:9999px;color:#fff;border:1px solid rgba(99,102,241,.5)">
-        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm7.94-3c0-.32-.03-.63-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.63l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54A.5.5 0 0 0 14.62 3h-3.84a.5.5 0 0 0-.5.43l-.36 2.54a7 7 0 0 0-1.62.94L5.9 6.35a.5.5 0 0 0-.61.22L3.37 9.89a.49.49 0 0 0 .12.63L5.52 12c-.04.31-.07.63-.07.94s.03.63.07.94l-2.03 1.58a.49.49 0 0 0-.12.63l1.92 3.32a.5.5 0 0 0 .61.22l2.39-.96a7 7 0 0 0 1.62.94l.36 2.54c.07.25.3.43.5.43h3.84a.5.5 0 0 0 .5-.43l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96a.5.5 0 0 0 .61-.22l1.92-3.32a.49.49 0 0 0-.12-.63l-2.03-1.58c.04-.31.07-.63.07-.94z"/></svg>
+        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm7.94-3c0-.32-.03-.63-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.63l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54A.5.5 0 0 0 14.62 3h-3.84a.5.5 0 0 0-.5.43l-.36 2.54a7 7 0 0 0-1.62.94L5.9 6.35a.5.5 0 0 0-.61.22L3.37 9.89a.5.5 0 0 0 .12.63L5.52 12c-.04.31-.07.63-.07.94s.03.63.07.94l-2.03 1.58a.5.5 0 0 0-.12.63l1.92 3.32a.5.5 0 0 0 .61.22l2.39-.96a7 7 0 0 0 1.62.94l.36 2.54c.07.25.3.43.5.43h3.84a.5.5 0 0 0 .5-.43l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96a.5.5 0 0 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.63l-2.03-1.58c.04-.31.07-.63.07-.94z"/></svg>
       </button>
     </div>
   </div>
 </nav>
 
-<main style="max-width:72rem;margin:0 auto;padding:1.5rem 1rem">
+<!-- MAIN -->
+<main style="max-width:72rem;margin:0 auto;padding:2rem 1rem">
 
   <!-- Stats -->
-  <div class="stats-grid" id="statsCards"></div>
+  <div id="statsCards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-bottom:2rem"></div>
 
-  <!-- Main 2-col grid -->
-  <div class="main-grid">
+  <!-- Body grid -->
+  <div style="display:grid;grid-template-columns:1fr;gap:2rem">
 
-    <!-- Kolom kiri: chart + kantong -->
-    <div style="display:flex;flex-direction:column;gap:1.5rem">
+    <!-- LEFT: chart + pockets (desktop: 4/12) -->
+    <div id="leftCol" style="display:flex;flex-direction:column;gap:2rem">
 
       <!-- Chart -->
-      <div class="card">
-        <h2 style="font-weight:700;color:#1f2937;font-size:1rem;margin-bottom:1.25rem;text-align:center">Portofolio</h2>
-        <div style="position:relative;height:14rem;width:100%;display:flex;justify-content:center">
+      <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+        <h2 style="font-weight:700;color:#1f2937;font-size:1.125rem;margin-bottom:1.5rem;text-align:center">Portofolio</h2>
+        <div style="position:relative;height:14rem;display:flex;justify-content:center">
           <canvas id="balanceChart"></canvas>
         </div>
-        <p id="chartEmptyMsg" class="hidden" style="text-align:center;font-size:.75rem;color:#9ca3af;margin-top:.75rem"></p>
+        <p id="chartEmptyMsg" class="hidden" style="text-align:center;font-size:.75rem;color:#9ca3af;margin-top:.75rem;padding:0 1rem"></p>
       </div>
 
-      <!-- Kantong -->
-      <div class="card">
-        <h2 style="font-weight:700;color:#1f2937;font-size:1rem;margin-bottom:1rem">Daftar Kantong</h2>
+      <!-- Pocket List -->
+      <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+        <h2 style="font-weight:700;color:#1f2937;font-size:1.125rem;margin-bottom:1rem">Daftar Kantong</h2>
         <button onclick="togglePocketModal()" style="width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem;background:#eef2ff;color:#4338ca;padding:.625rem;border-radius:.75rem;font-weight:700;font-size:.875rem;border:1px solid #e0e7ff;margin-bottom:1rem">
           <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
           Kantong Baru
         </button>
-        <div id="pocketList" style="display:flex;flex-direction:column;gap:.625rem;max-height:400px;overflow-y:auto;padding-right:.25rem"></div>
+        <div id="pocketList" style="display:flex;flex-direction:column;gap:.75rem;max-height:400px;overflow-y:auto;padding-right:.25rem"></div>
       </div>
     </div>
 
-    <!-- Kolom kanan: transaksi -->
-    <div>
-      <div class="card" style="min-height:500px;display:flex;flex-direction:column">
+    <!-- RIGHT: transaction table (desktop: 8/12) -->
+    <div id="rightCol">
+      <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05);min-height:600px;display:flex;flex-direction:column">
 
-        <!-- Header tabel -->
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid #f3f4f6">
+        <!-- Table header row -->
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #f3f4f6">
           <div>
-            <h2 id="currentPocketTitle" style="font-weight:700;font-size:1.125rem;color:#1f2937">Semua Transaksi</h2>
-            <p id="currentPocketDesc" style="font-size:.8125rem;color:#6b7280;text-align:left">Riwayat arus kas Anda</p>
+            <h2 id="currentPocketTitle" style="font-weight:700;font-size:1.25rem;color:#1f2937">Semua Transaksi</h2>
+            <p id="currentPocketDesc" style="font-size:.875rem;color:#6b7280">Riwayat arus kas Anda</p>
           </div>
-          <button onclick="openTransactionModal()" style="display:flex;align-items:center;gap:.5rem;background:#4f46e5;color:#fff;padding:.625rem 1rem;border-radius:.75rem;font-weight:700;font-size:.875rem;box-shadow:0 4px 12px rgba(79,70,229,.3);white-space:nowrap">
+          <button onclick="openTransactionModal()" style="display:flex;align-items:center;gap:.5rem;background:#4f46e5;color:#fff;padding:.75rem 1.25rem;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(79,70,229,.3)">
             <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
             Transaksi Baru
           </button>
         </div>
 
-        <!-- Table wrapper -->
+        <!-- Table container -->
         <div style="flex:1;border:1px solid #e5e7eb;border-radius:.75rem;overflow:hidden;background:#fff">
 
-          <!-- Navigasi tahun -->
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:.625rem 1rem;background:#f9fafb;border-bottom:1px solid #f3f4f6">
-            <button id="prevYearBtn" onclick="changeYear(-1)" disabled style="width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:#fff;color:#6366f1;border:1px solid #e0e7ff;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+          <!-- Year nav -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;background:#f9fafb;border-bottom:1px solid #f3f4f6">
+            <button id="prevYearBtn" onclick="changeYear(-1)" disabled style="width:2.25rem;height:2.25rem;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:#fff;color:#6366f1;border:1px solid #e0e7ff;box-shadow:0 1px 2px rgba(0,0,0,.05)">
               <svg class="icon icon-xs" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11L5 7L9 3"/></svg>
             </button>
-            <span id="yearDisplay" style="font-weight:700;color:#4338ca;background:#fff;padding:.375rem 1.25rem;border-radius:9999px;border:1px solid #e0e7ff;font-size:.9rem;letter-spacing:.04em;min-width:5rem;text-align:center">...</span>
-            <button id="nextYearBtn" onclick="changeYear(1)" disabled style="width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:#fff;color:#6366f1;border:1px solid #e0e7ff;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+            <span id="yearDisplay" style="font-weight:700;color:#4338ca;background:#fff;padding:.5rem 1.5rem;border-radius:9999px;border:1px solid #e0e7ff;box-shadow:0 1px 2px rgba(0,0,0,.05);font-size:.9375rem;letter-spacing:.05em;min-width:6rem;text-align:center">...</span>
+            <button id="nextYearBtn" onclick="changeYear(1)" disabled style="width:2.25rem;height:2.25rem;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:#fff;color:#6366f1;border:1px solid #e0e7ff;box-shadow:0 1px 2px rgba(0,0,0,.05)">
               <svg class="icon icon-xs" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3L9 7L5 11"/></svg>
             </button>
           </div>
 
           <!-- Search -->
-          <div style="padding:.625rem 1rem;border-bottom:1px solid #f3f4f6">
+          <div style="padding:.75rem 1rem;border-bottom:1px solid #f3f4f6">
             <div style="position:relative;display:flex;align-items:center">
-              <span style="position:absolute;left:.75rem;color:#9ca3af;display:flex;pointer-events:none">
+              <span style="position:absolute;left:.875rem;color:#9ca3af;display:flex;pointer-events:none">
                 <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
               </span>
-              <input type="text" id="searchInput" oninput="handleSearch(event)" placeholder="Cari transaksi..." style="width:100%;background:#fff;border:1px solid #e5e7eb;border-radius:.75rem;padding:.5rem 2.25rem;font-size:.875rem;outline:none;color:#374151;font-weight:500">
-              <button id="clearSearchBtn" onclick="clearSearch()" class="hidden" style="position:absolute;right:.75rem;color:#9ca3af;display:flex;background:none;border:none;padding:0">
+              <input type="text" id="searchInput" oninput="handleSearch(event)" placeholder="Cari transaksi..." style="width:100%;background:#fff;border:1px solid #e5e7eb;border-radius:.75rem;padding:.625rem 2.5rem;font-size:.875rem;outline:none;color:#374151;font-weight:500">
+              <button id="clearSearchBtn" onclick="clearSearch()" class="hidden" style="position:absolute;right:.875rem;color:#9ca3af;display:flex">
                 <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
               </button>
             </div>
           </div>
 
-          <!-- Tabel scroll -->
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-            <table style="width:100%;min-width:480px;border-collapse:collapse">
+          <!-- Table scroll wrapper -->
+          <div style="overflow-x:auto">
+            <table style="width:100%;min-width:550px;border-collapse:collapse">
               <thead style="background:#f9fafb;border-bottom:1px solid #e5e7eb">
                 <tr>
-                  <th style="padding:.75rem 1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;text-align:left;white-space:nowrap">Tanggal</th>
-                  <th style="padding:.75rem 1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;text-align:left">Keterangan</th>
-                  <th style="padding:.75rem 1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;text-align:right;white-space:nowrap">Nominal</th>
-                  <th style="padding:.75rem 1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;text-align:center;white-space:nowrap;width:5.5rem">Aksi</th>
+                  <th style="padding:1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;text-align:left;width:6rem">Tanggal</th>
+                  <th style="padding:1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;text-align:left">Keterangan</th>
+                  <th style="padding:1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;text-align:right">Nominal</th>
+                  <th style="padding:1rem;font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;text-align:center;width:8rem">Aksi</th>
                 </tr>
               </thead>
               <tbody id="transactionBody"></tbody>
             </table>
 
             <!-- Empty state -->
-            <div id="emptyState" class="hidden" style="padding:4rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
-              <div style="background:#fff;padding:1.25rem;border-radius:9999px;margin-bottom:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)">
-                <svg style="width:2.25rem;height:2.25rem;color:#d1d5db" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10z"/></svg>
+            <div id="emptyState" class="hidden" style="padding:5rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+              <div style="background:#fff;padding:1.5rem;border-radius:9999px;margin-bottom:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+                <svg style="width:2.5rem;height:2.5rem;color:#d1d5db" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10z"/></svg>
               </div>
-              <h3 id="emptyTitle" style="color:#4b5563;font-weight:700;font-size:1rem">Tidak ada catatan</h3>
-              <p id="emptyDesc" style="color:#9ca3af;font-size:.875rem;margin-top:.25rem;text-align:center">Belum ada transaksi di tahun ini.</p>
-              <button id="emptyAction" onclick="openTransactionModal()" style="margin-top:1.25rem;display:flex;align-items:center;gap:.5rem;background:#4f46e5;color:#fff;padding:.625rem 1.25rem;border-radius:.75rem;font-weight:700;font-size:.875rem;box-shadow:0 4px 12px rgba(79,70,229,.2)">
+              <h3 id="emptyTitle" style="color:#4b5563;font-weight:700;font-size:1.125rem">Tidak ada catatan</h3>
+              <p id="emptyDesc" style="color:#9ca3af;font-size:.875rem;margin-top:.25rem">Belum ada transaksi di tahun ini.</p>
+              <button id="emptyAction" onclick="openTransactionModal()" style="margin-top:1.25rem;display:flex;align-items:center;gap:.5rem;background:#4f46e5;color:#fff;padding:.75rem 1.5rem;border-radius:.75rem;font-weight:700;font-size:.875rem;box-shadow:0 4px 12px rgba(79,70,229,.2)">
                 <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                 Catat Transaksi Pertama
               </button>
@@ -272,18 +203,19 @@ span.flatpickr-weekday{background:transparent!important;color:#a5b4fc!important;
   </div>
 </main>
 
-<!-- ══════════ MODALS ══════════ -->
+<!-- ===== MODALS ===== -->
+<!-- Semua modal pakai display:none via .hidden, dibuka JS dengan inline style -->
 
 <!-- Settings -->
-<div id="settingsModal" class="modal-overlay hidden">
-  <div class="modal-box" style="max-width:24rem;padding:1.5rem">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem">
-      <h3 style="font-size:1.125rem;font-weight:700;color:#1f2937">Pengaturan Data</h3>
+<div id="settingsModal" class="hidden" style="position:fixed;inset:0;background:rgba(17,24,39,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:60;padding:1rem">
+  <div id="settingsBox" style="background:#fff;border-radius:1.5rem;width:100%;max-width:24rem;padding:1.5rem;box-shadow:0 25px 50px rgba(0,0,0,.25)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+      <h3 style="font-size:1.25rem;font-weight:700;color:#1f2937">Pengaturan Data</h3>
       <button onclick="toggleModal('settingsModal')" style="width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;background:#f3f4f6;border-radius:9999px;color:#6b7280">
         <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
       </button>
     </div>
-    <p style="font-size:.875rem;color:#6b7280;margin-bottom:1.25rem;text-align:justify">Amankan data keuangan Anda dengan mencadangkannya, atau pulihkan dari cadangan sebelumnya.</p>
+    <p style="font-size:.875rem;color:#6b7280;margin-bottom:1.5rem">Amankan data keuangan Anda dengan mencadangkannya, atau pulihkan dari cadangan.</p>
     <div style="display:flex;flex-direction:column;gap:.75rem">
       <button onclick="exportData()" style="display:flex;align-items:center;justify-content:space-between;background:#eef2ff;color:#4338ca;padding:1rem 1.25rem;border-radius:1rem;font-weight:700;border:1px solid #e0e7ff;width:100%">
         <div style="display:flex;align-items:center;gap:.75rem">
@@ -304,40 +236,40 @@ span.flatpickr-weekday{background:transparent!important;color:#a5b4fc!important;
   </div>
 </div>
 
-<!-- Tambah Kantong -->
-<div id="pocketModal" class="modal-overlay hidden">
-  <div class="modal-box" style="max-width:28rem;padding:1.5rem">
-    <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:1.25rem;color:#1f2937">Buat Kantong Baru</h3>
-    <div style="display:flex;flex-direction:column;gap:1rem">
+<!-- Add Pocket -->
+<div id="pocketModal" class="hidden" style="position:fixed;inset:0;background:rgba(17,24,39,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:60;padding:1rem">
+  <div id="pocketBox" style="background:#fff;border-radius:1.5rem;width:100%;max-width:28rem;padding:1.5rem;box-shadow:0 25px 50px rgba(0,0,0,.25)">
+    <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1.5rem;color:#1f2937">Buat Kantong Baru</h3>
+    <div style="display:flex;flex-direction:column;gap:1.25rem">
       <div>
         <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Nama Kantong</label>
         <input type="text" id="pocketName" placeholder="Contoh: Tabungan Liburan" style="width:100%;border:1px solid #e5e7eb;background:#f9fafb;border-radius:.75rem;padding:.75rem 1rem;outline:none;font-weight:500;color:#1f2937">
       </div>
       <div>
         <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.5rem">Pilih Ikon</label>
-        <div id="iconPicker" style="display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;max-height:9rem;overflow-y:auto;padding:.25rem .125rem"></div>
+        <div id="iconPicker" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
       </div>
     </div>
-    <div style="display:flex;gap:.75rem;margin-top:1.5rem">
+    <div style="display:flex;gap:.75rem;margin-top:2rem">
       <button type="button" onclick="toggleModal('pocketModal')" style="flex:1;padding:.75rem;border:1px solid #e5e7eb;color:#4b5563;border-radius:.75rem;font-weight:700;background:#fff">Batal</button>
       <button type="button" onclick="addPocket()" style="flex:1;padding:.75rem;background:#4f46e5;color:#fff;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(79,70,229,.3)">Simpan Kantong</button>
     </div>
   </div>
 </div>
 
-<!-- Transaksi -->
-<div id="transactionModal" class="modal-overlay hidden">
-  <div class="modal-box" style="max-width:28rem;padding:1.5rem;padding-bottom:max(1.5rem,env(safe-area-inset-bottom))">
-    <h3 id="txModalTitle" style="font-size:1.125rem;font-weight:700;margin-bottom:1.25rem;color:#1f2937">Tambah Transaksi</h3>
-    <form id="txForm" style="display:flex;flex-direction:column;gap:1rem" onsubmit="event.preventDefault();saveTransaction()">
+<!-- Transaction -->
+<div id="transactionModal" class="hidden" style="position:fixed;inset:0;background:rgba(17,24,39,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:60;padding:1rem;overflow-y:auto">
+  <div id="transactionBox" style="background:#fff;border-radius:1.5rem;width:100%;max-width:28rem;padding:1.5rem;box-shadow:0 25px 50px rgba(0,0,0,.25);margin:auto">
+    <h3 id="txModalTitle" style="font-size:1.25rem;font-weight:700;margin-bottom:1.5rem;color:#1f2937">Tambah Transaksi</h3>
+    <form id="txForm" style="display:flex;flex-direction:column;gap:1.25rem" onsubmit="event.preventDefault();saveTransaction()">
 
-      <!-- Tipe toggle -->
+      <!-- Type toggle -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;background:#f3f4f6;padding:.375rem;border-radius:1rem">
-        <button type="button" id="btnTypeIn" onclick="setTxType('in')" style="padding:.625rem;border-radius:.75rem;font-weight:700;background:#fff;color:#059669;box-shadow:0 1px 2px rgba(0,0,0,.05);border:1px solid rgba(229,231,235,.5);min-height:2.5rem;width:100%">Pemasukan</button>
-        <button type="button" id="btnTypeOut" onclick="setTxType('out')" style="padding:.625rem;border-radius:.75rem;font-weight:700;color:#6b7280;border:1px solid transparent;background:#f3f4f6;min-height:2.5rem;width:100%">Pengeluaran</button>
+        <button type="button" id="btnTypeIn" onclick="setTxType('in')" style="padding:.625rem;border-radius:.75rem;font-weight:700;background:#fff;color:#059669;box-shadow:0 1px 2px rgba(0,0,0,.05);border:1px solid rgba(229,231,235,.5)">Pemasukan</button>
+        <button type="button" id="btnTypeOut" onclick="setTxType('out')" style="padding:.625rem;border-radius:.75rem;font-weight:700;color:#6b7280;border:1px solid transparent;background:transparent">Pengeluaran</button>
       </div>
 
-      <!-- Nominal -->
+      <!-- Amount -->
       <div>
         <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Nominal (Rp)</label>
         <div style="position:relative">
@@ -346,7 +278,7 @@ span.flatpickr-weekday{background:transparent!important;color:#a5b4fc!important;
         </div>
       </div>
 
-      <!-- Kantong -->
+      <!-- Pocket select -->
       <div>
         <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Pilih Kantong</label>
         <div style="position:relative" id="customPocketSelectContainer">
@@ -359,24 +291,24 @@ span.flatpickr-weekday{background:transparent!important;color:#a5b4fc!important;
         </div>
       </div>
 
-      <!-- Keterangan -->
+      <!-- Note -->
       <div>
         <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Keterangan</label>
         <input type="text" id="txNote" placeholder="Contoh: Makan Siang / Gaji" style="width:100%;border:1px solid #e5e7eb;background:#f9fafb;border-radius:.75rem;padding:.75rem 1rem;outline:none;font-weight:500;color:#1f2937">
       </div>
 
-      <!-- Tanggal -->
+      <!-- Date -->
       <div>
         <label style="display:block;font-size:.875rem;font-weight:600;color:#374151;margin-bottom:.375rem">Tanggal</label>
-        <div id="txDateWrap">
-          <input type="text" id="txDate" placeholder="Pilih tanggal...">
-          <span>
+        <div style="position:relative">
+          <span style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#6366f1;display:flex;align-items:center;pointer-events:none;z-index:1">
             <svg class="icon icon-md" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3h-1V1h-2v2H7V1H5v2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H4V8h16v13z"/></svg>
           </span>
+          <input type="text" id="txDate" placeholder="Pilih Tanggal" style="width:100%;border:1px solid #e5e7eb;background:#f9fafb;border-radius:.75rem;padding:.75rem 1rem .75rem 3rem;outline:none;font-weight:700;color:#1f2937;cursor:pointer">
         </div>
       </div>
 
-      <div style="display:flex;gap:.75rem;padding-top:.25rem">
+      <div style="display:flex;gap:.75rem;padding-top:.5rem">
         <button type="button" onclick="toggleModal('transactionModal')" style="flex:1;padding:.75rem;border:1px solid #e5e7eb;color:#4b5563;border-radius:.75rem;font-weight:700;background:#fff">Batal</button>
         <button type="submit" style="flex:1;padding:.75rem;background:#4f46e5;color:#fff;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(79,70,229,.3)">Simpan Data</button>
       </div>
@@ -384,14 +316,14 @@ span.flatpickr-weekday{background:transparent!important;color:#a5b4fc!important;
   </div>
 </div>
 
-<!-- Konfirmasi -->
-<div id="confirmModal" class="modal-overlay hidden" style="z-index:80">
-  <div class="modal-box" style="max-width:22rem;padding:1.5rem;text-align:center">
-    <div style="width:4.5rem;height:4.5rem;background:#ffe4e6;color:#e11d48;border-radius:9999px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem">
-      <svg style="width:1.75rem;height:1.75rem" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+<!-- Confirm -->
+<div id="confirmModal" class="hidden" style="position:fixed;inset:0;background:rgba(17,24,39,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:80;padding:1rem">
+  <div id="confirmBox" style="background:#fff;border-radius:1.5rem;width:100%;max-width:24rem;padding:1.5rem;box-shadow:0 25px 50px rgba(0,0,0,.25);text-align:center">
+    <div style="width:5rem;height:5rem;background:#ffe4e6;color:#e11d48;border-radius:9999px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem">
+      <svg style="width:2rem;height:2rem" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
     </div>
-    <h3 id="confirmTitle" style="font-size:1.125rem;font-weight:700;margin-bottom:.5rem;color:#1f2937">Konfirmasi</h3>
-    <p id="confirmMessage" style="color:#6b7280;font-size:.875rem;margin-bottom:1.75rem;padding:0 .5rem;text-align:center">Apakah Anda yakin?</p>
+    <h3 id="confirmTitle" style="font-size:1.25rem;font-weight:700;margin-bottom:.5rem;color:#1f2937">Konfirmasi</h3>
+    <p id="confirmMessage" style="color:#6b7280;font-size:.875rem;margin-bottom:2rem;padding:0 .5rem">Apakah Anda yakin?</p>
     <div style="display:flex;gap:.75rem">
       <button type="button" id="btnConfirmCancel" style="flex:1;padding:.75rem;border:1px solid #e5e7eb;color:#374151;border-radius:.75rem;font-weight:700;background:#fff">Batal</button>
       <button type="button" id="btnConfirmOk" style="flex:1;padding:.75rem;background:#e11d48;color:#fff;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(225,29,72,.3)">Ya, Setuju!</button>
@@ -399,22 +331,45 @@ span.flatpickr-weekday{background:transparent!important;color:#a5b4fc!important;
   </div>
 </div>
 
-<!-- Script: chart & flatpickr di akhir body agar tidak block render -->
+<!-- Responsive layout: desktop 2 cols -->
+<style>
+@media(min-width:1024px){
+  #mainGrid{grid-template-columns:4fr 8fr !important}
+}
+</style>
+<script>
+// Apply 2-col layout on desktop
+(function(){
+  var main = document.querySelector('[style*="grid-template-columns:1fr"]');
+  if(main) main.id = 'mainGrid';
+  function applyLayout(){
+    var g = document.getElementById('mainGrid');
+    if(!g) return;
+    if(window.innerWidth >= 1024){
+      g.style.gridTemplateColumns = '1fr 2fr';
+    } else {
+      g.style.gridTemplateColumns = '1fr';
+    }
+  }
+  applyLayout();
+  window.addEventListener('resize', applyLayout);
+})();
+
+// Show balance header on md+
+(function(){
+  function checkWidth(){
+    var el = document.getElementById('totalBalanceHeader');
+    if(el) el.style.display = window.innerWidth >= 768 ? 'block' : 'none';
+  }
+  checkWidth();
+  window.addEventListener('resize', checkWidth);
+})();
+</script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
 <script src="icons.js"></script>
 <script src="app.js"></script>
-
-<script>
-// Responsive: tampilkan balance header di desktop
-(function(){
-  function check(){
-    var el=document.getElementById('totalBalanceHeader');
-    if(el) el.style.display=window.innerWidth>=768?'block':'none';
-  }
-  check();
-  window.addEventListener('resize',check);
-})();
-</script>
 </body>
 </html>
