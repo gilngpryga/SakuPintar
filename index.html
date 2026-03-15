@@ -231,80 +231,54 @@ span.flatpickr-weekday{
 
 /* ═══ MOBILE RESPONSIVE ═══ */
 @media(max-width:640px){
-  /* Main container: kurangi padding */
-  main{padding:1rem .75rem!important}
-  
-  /* Stat cards: 3 kolom kecil berdampingan */
-  #statsCards{
-    grid-template-columns:repeat(3,1fr)!important;
-    gap:.5rem!important;
-    margin-bottom:1rem!important
-  }
-  .stat-card{
-    padding:.75rem .625rem!important;
-    border-radius:.875rem!important
-  }
-  .stat-label{font-size:.55rem!important;margin-bottom:.2rem!important;letter-spacing:.03em!important}
-  .stat-value{font-size:.95rem!important}
+  html,body{overflow-x:hidden!important}
+  main{padding:.875rem .75rem!important}
+
+  /* Stats: 3 kolom compact */
+  #statsCards{grid-template-columns:repeat(3,1fr)!important;gap:.375rem!important;margin-bottom:.875rem!important}
+  .stat-card{padding:.625rem .5rem!important;border-radius:.75rem!important;overflow:hidden!important}
   .stat-deco{display:none!important}
-  /* Sembunyikan ikon dekorasi stat di mobile */
   .stat-card>div[style*="position:absolute"]{display:none!important}
-  
-  /* Chart: lebih kecil di mobile */
-  
-  /* Section cards: kurangi padding */
-  #leftCol > div,
-  #rightCol > div{
-    padding:.875rem .75rem!important;
-    border-radius:.875rem!important
-  }
-  /* Right col header: force wrap lebih awal */
+  .stat-label{font-size:.5rem!important;margin-bottom:.15rem!important;letter-spacing:.02em!important}
+  .stat-value{font-size:.875rem!important}
+
+  /* Chart section */
+  #leftCol>div:first-child{padding:.875rem!important}
+  #leftCol>div:first-child h2{font-size:1rem!important;margin-bottom:.875rem!important}
+  #leftCol>div:first-child>div[style*="height"]{height:160px!important}
+
+  /* Daftar Kantong */
+  #leftCol>div:last-child{padding:.875rem!important}
+  #pocketList{gap:.375rem!important}
+  .pocket-item{padding:.5rem!important}
+  .pocket-icon{width:2.5rem!important;height:2.5rem!important;border-radius:.625rem!important}
+  .pocket-item p:first-child{font-size:.8125rem!important}
+  .pocket-item p:last-child{font-size:.7rem!important}
+
+  /* Transaction section */
+  #rightCol>div{padding:.875rem .75rem!important}
+  #rightCol>div>div:first-child{margin-bottom:.875rem!important;padding-bottom:.875rem!important}
   #rightCol h2{font-size:1rem!important}
-  #rightCol button[onclick="openTransactionModal()"]{
-    padding:.625rem 1rem!important;
-    font-size:.875rem!important;
-    border-radius:.625rem!important
-  }
-  
-  /* Transaction header: stack vertikal */
-  #rightCol .flex.md-flex-row{flex-direction:column!important;gap:.75rem!important}
-  #rightCol h2{font-size:1.1rem!important}
-  
-  /* Tombol Transaksi Baru: full width */
-  #rightCol button.btn-primary{width:100%!important}
-  
-  /* Year nav + search: lebih compact */
-  .year-nav{padding:.5rem .75rem!important}
-  .year-display{padding:.375rem 1rem!important;font-size:.875rem!important}
-  .search-wrap{padding:.5rem .75rem!important}
-  
-  /* Table: font lebih kecil */
+  #rightCol p{font-size:.75rem!important}
+  #rightCol>div>div:first-child button{padding:.625rem .875rem!important;font-size:.8125rem!important;white-space:nowrap}
+
+  /* Year nav */
+  .year-nav{padding:.5rem .625rem!important}
+  .year-display{padding:.3rem .75rem!important;font-size:.8125rem!important;min-width:auto!important}
+  .year-btn{width:1.875rem!important;height:1.875rem!important}
+
+  /* Search */
+  .search-wrap{padding:.5rem .625rem!important}
+  .search-input{font-size:.8125rem!important}
+
+  /* Table */
   #transactionBody td{padding:.5rem .375rem!important;font-size:.8rem!important}
   thead th{padding:.5rem .375rem!important;font-size:.6rem!important}
-  /* Sembunyikan kolom Aksi di mobile - edit/hapus via long-press atau tombol inline */
-  #transactionBody td:last-child,
-  thead th:last-child{display:none!important}
-  /* Kolom tanggal lebih kecil */
-  #transactionBody td:first-child{font-size:.7rem!important;white-space:nowrap}
-  
-  /* Pocket list: kurangi gap */
-  #pocketList{gap:.5rem!important}
-  .pocket-item{padding:.625rem!important}
-  
-  /* Modal: kurangi padding, lebih pas di layar kecil */
-  .modal-overlay{padding:.5rem!important}
-  #settingsBox,#pocketBox,#transactionBox,#confirmBox{
-    padding:1.25rem!important;
-    border-radius:1.25rem!important
-  }
-  
-  /* Icon picker: 8 kolom di mobile agar lebih kecil */
-  #iconPicker{grid-template-columns:repeat(8,1fr)!important}
-}
+  #transactionBody td:last-child,thead th:last-child{display:none!important}
+  #transactionBody td:first-child{font-size:.7rem!important}
 
-/* Stat cards: di layar sedang (641-768px) tampilkan 3 kolom kecil */
-@media(min-width:641px) and (max-width:767px){
-  #statsCards{grid-template-columns:repeat(3,1fr)!important;gap:.75rem!important}
+  /* Modal */
+  .modal-overlay>div{padding:1rem!important;border-radius:1rem!important;max-width:calc(100vw - 1rem)!important}
 }
 </style>
 </head>
@@ -330,7 +304,7 @@ span.flatpickr-weekday{
 <main style="max-width:72rem;margin:0 auto;padding:1.5rem 1rem" id="mainContainer">
 
   <!-- Stats -->
-  <div id="statsCards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem"></div>
+  <div id="statsCards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem"></div>
 
   <!-- Body grid -->
   <div style="display:grid;grid-template-columns:1fr;gap:2rem">
@@ -341,7 +315,7 @@ span.flatpickr-weekday{
       <!-- Chart -->
       <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05)">
         <h2 style="font-weight:700;color:#1f2937;font-size:1.125rem;margin-bottom:1.5rem;text-align:center">Portofolio</h2>
-        <div style="position:relative;width:100%;height:200px">
+        <div style="position:relative;width:100%;height:200px;max-height:200px">
           <canvas id="balanceChart"></canvas>
         </div>
         <p id="chartEmptyMsg" class="hidden" style="text-align:center;font-size:.75rem;color:#9ca3af;margin-top:.75rem;padding:0 1rem"></p>
@@ -363,12 +337,12 @@ span.flatpickr-weekday{
       <div style="background:#fff;padding:1.5rem;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.05);min-height:600px;display:flex;flex-direction:column">
 
         <!-- Table header row -->
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem;margin-bottom:1.25rem;padding-bottom:.875rem;border-bottom:1px solid #f3f4f6">
-          <div>
-            <h2 id="currentPocketTitle" style="font-weight:700;font-size:1.25rem;color:#1f2937">Semua Transaksi</h2>
-            <p id="currentPocketDesc" style="font-size:.875rem;color:#6b7280">Riwayat arus kas Anda</p>
+        <div style="display:flex;flex-wrap:nowrap;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:1.25rem;padding-bottom:.875rem;border-bottom:1px solid #f3f4f6;overflow:hidden">
+          <div style="min-width:0;flex:1">
+            <h2 id="currentPocketTitle" style="font-weight:700;font-size:1.125rem;color:#1f2937;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Semua Transaksi</h2>
+            <p id="currentPocketDesc" style="font-size:.8125rem;color:#6b7280">Riwayat arus kas Anda</p>
           </div>
-          <button onclick="openTransactionModal()" style="display:flex;align-items:center;gap:.5rem;background:#4f46e5;color:#fff;padding:.75rem 1.25rem;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(79,70,229,.3);min-height:44px">
+          <button onclick="openTransactionModal()" style="display:flex;align-items:center;gap:.5rem;background:#4f46e5;color:#fff;padding:.75rem 1rem;border-radius:.75rem;font-weight:700;box-shadow:0 4px 12px rgba(79,70,229,.3);min-height:44px;white-space:nowrap;flex-shrink:0">
             <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
             Transaksi Baru
           </button>
