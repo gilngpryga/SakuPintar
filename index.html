@@ -4,28 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>SakuPintar - Money Management</title>
-
+    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4F46E5">
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="SakuPintar">
     <link rel="apple-touch-icon" href="icon-192.png">
-
-    <link rel="stylesheet" href="./libs/tailwind.css">
-    <link href="./libs/fontawesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./libs/flatpickr.min.css">
-    <script src="./libs/chart.min.js"></script>
-    <script src="./libs/flatpickr.min.js"></script>
+    
+    <!-- Library CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Flatpickr CSS untuk Kalender Modern -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <!-- Library JS (Script bahasa Indonesia eksternal dihapus agar tidak error) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-
+        
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -37,196 +44,26 @@
             border-color: #f43f5e !important;
             background-color: #fff1f2 !important;
         }
+        .input-error:focus { box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.2); }
+        
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
 
-        /* ============================================
-           FLATPICKR — Redesign Total
-           ============================================ */
-
-        /* Kontainer kalender: pakai lebar tetap agar tidak terpotong */
-        .flatpickr-calendar {
-            border-radius: 20px !important;
-            box-shadow: 0 20px 60px -10px rgba(79, 70, 229, 0.18), 0 4px 16px rgba(0,0,0,0.08) !important;
-            border: 1px solid #e0e7ff !important;
-            padding: 16px !important;
-            font-family: 'Inter', sans-serif !important;
-            /* Lebar tetap agar 7 kolom tidak terpotong */
-            width: 320px !important;
-            max-width: calc(100vw - 32px) !important;
-        }
-
-        /* Header bulan & tahun */
-        .flatpickr-months {
-            padding: 0 0 12px 0 !important;
-            align-items: center !important;
-        }
-
-        .flatpickr-month {
-            height: 40px !important;
-            background: transparent !important;
-            color: #1e1b4b !important;
-        }
-
-        /* Teks nama bulan — tampil sebagai pill indigo */
-        .flatpickr-current-month {
-            padding: 0 !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 8px !important;
-            font-size: 15px !important;
-            font-weight: 700 !important;
-            color: #4F46E5 !important;
-        }
-
-        /* Sembunyikan select bawaan bulan & input tahun bawaan browser */
-        .flatpickr-current-month select.flatpickr-monthDropdown-months {
-            appearance: none !important;
-            -webkit-appearance: none !important;
-            background: #eef2ff !important;
-            border: none !important;
-            border-radius: 10px !important;
-            padding: 6px 14px !important;
-            font-size: 14px !important;
-            font-weight: 700 !important;
-            color: #4338ca !important;
-            cursor: pointer !important;
-            outline: none !important;
-        }
-
-        /* Input tahun — ganti jadi pill */
-        .flatpickr-current-month input.cur-year {
-            background: #eef2ff !important;
-            border: none !important;
-            border-radius: 10px !important;
-            padding: 6px 10px !important;
-            font-size: 14px !important;
-            font-weight: 700 !important;
-            color: #4338ca !important;
-            width: 60px !important;
-            text-align: center !important;
-            outline: none !important;
-            /* Sembunyikan spin button bawaan */
-            -moz-appearance: textfield !important;
-        }
-        .flatpickr-current-month input.cur-year::-webkit-inner-spin-button,
-        .flatpickr-current-month input.cur-year::-webkit-outer-spin-button {
-            -webkit-appearance: none !important;
-            margin: 0 !important;
-        }
-
-        /* Tombol prev/next — ganti jadi lingkaran indigo modern */
-        .flatpickr-prev-month,
-        .flatpickr-next-month {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 36px !important;
-            height: 36px !important;
-            border-radius: 50% !important;
-            background: #eef2ff !important;
-            border: none !important;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
-            padding: 0 !important;
-            transition: background 0.2s !important;
-        }
-        .flatpickr-prev-month:hover,
-        .flatpickr-next-month:hover {
-            background: #c7d2fe !important;
-        }
-        /* Posisi: prev di kiri, next di kanan sejajar header */
-        .flatpickr-prev-month { left: 16px !important; }
-        .flatpickr-next-month { right: 16px !important; }
-
-        /* Ikon panah SVG di dalam tombol prev/next */
-        .flatpickr-prev-month svg,
-        .flatpickr-next-month svg {
-            width: 14px !important;
-            height: 14px !important;
-            fill: none !important;
-            stroke: #4F46E5 !important;
-            stroke-width: 2.5 !important;
-        }
-
-        /* Wrapper hari dalam seminggu */
-        .flatpickr-weekdays {
-            background: transparent !important;
-            margin-bottom: 4px !important;
-        }
-        span.flatpickr-weekday {
-            background: transparent !important;
-            color: #a5b4fc !important;
-            font-size: 11px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.05em !important;
-        }
-
-        /* Grid hari */
-        .flatpickr-days { width: 100% !important; }
-        .dayContainer {
-            width: 100% !important;
-            min-width: 100% !important;
-            max-width: 100% !important;
-        }
-
-        .flatpickr-day {
-            border-radius: 12px !important;
-            font-size: 13px !important;
-            font-weight: 500 !important;
-            color: #374151 !important;
-            border: none !important;
-            line-height: 38px !important;
-            height: 38px !important;
-            max-width: calc(100% / 7) !important;
-            transition: background 0.15s, color 0.15s !important;
-        }
-        .flatpickr-day:hover {
-            background: #e0e7ff !important;
-            color: #4338ca !important;
-        }
-
-        /* Tanggal hari ini */
-        .flatpickr-day.today {
-            background: #e0e7ff !important;
-            color: #4338ca !important;
-            font-weight: 700 !important;
-        }
-        .flatpickr-day.today:before { display: none !important; }
-
-        /* Tanggal dipilih */
-        .flatpickr-day.selected,
-        .flatpickr-day.selected:hover {
+        /* Kustomisasi Tema Kalender Flatpickr agar warnanya Indigo */
+        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
             background: #4F46E5 !important;
             border-color: #4F46E5 !important;
-            color: #fff !important;
-            font-weight: 700 !important;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35) !important;
         }
-
-        /* Tanggal bulan lain */
-        .flatpickr-day.prevMonthDay,
-        .flatpickr-day.nextMonthDay {
-            color: #d1d5db !important;
-        }
-
-        /* Sembunyikan elemen yang tidak perlu */
-        .flatpickr-time { display: none !important; }
-
-        /* ============================================
-           Context Menu Pocket
-           ============================================ */
-        .pocket-context-menu {
-            transform-origin: top right;
-            transition: opacity 0.15s ease, transform 0.15s ease;
+        .flatpickr-calendar {
+            border-radius: 16px !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+            border: none !important;
+            padding: 10px !important;
         }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen pb-20">
 
-    <!-- Navbar -->
     <nav class="bg-indigo-600 text-white shadow-lg sticky top-0 z-40" style="padding-top: env(safe-area-inset-top);">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold flex items-center gap-2">
@@ -236,7 +73,7 @@
                 <div id="totalBalanceHeader" class="text-sm font-medium bg-indigo-700 px-4 py-2.5 rounded-full shadow-inner transition-all border border-indigo-500/50 hidden md:block">
                     Total Saldo: Rp 0
                 </div>
-                <button onclick="toggleModal('settingsModal')" class="w-10 h-10 flex items-center justify-center bg-indigo-700 rounded-full text-white border border-indigo-500/50 shadow-sm" title="Pengaturan Data">
+                <button onclick="toggleModal('settingsModal')" class="w-10 h-10 flex items-center justify-center bg-indigo-700 hover:bg-indigo-800 rounded-full transition-colors text-white border border-indigo-500/50 shadow-sm" title="Pengaturan Data">
                     <i class="fas fa-cog"></i>
                 </button>
             </div>
@@ -247,24 +84,20 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="statsCards"></div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <!-- Kolom Kiri -->
             <div class="lg:col-span-4 space-y-8">
-                <!-- Chart Portofolio -->
                 <div class="glass p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h2 class="font-bold text-gray-800 text-lg mb-6 text-center">Portofolio</h2>
+                    <h2 class="font-bold text-gray-800 text-lg mb-6 text-center">Portfolio</h2>
                     <div class="relative h-56 w-full flex justify-center">
                         <canvas id="balanceChart"></canvas>
                     </div>
-                    <p id="chartEmptyMsg" class="hidden text-center text-xs text-gray-400 mt-3 px-4"></p>
                 </div>
 
-                <!-- Daftar Kantong -->
                 <div class="glass p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full">
                     <div class="flex flex-col gap-4 mb-4">
                         <div class="flex justify-between items-center">
                             <h2 class="font-bold text-gray-800 text-lg">Daftar Kantong</h2>
                         </div>
-                        <button onclick="togglePocketModal()" class="w-full bg-indigo-50 text-indigo-700 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-colors border border-indigo-100 shadow-sm">
+                        <button onclick="togglePocketModal()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-colors border border-indigo-100 shadow-sm">
                             <i class="fas fa-plus-circle"></i> Kantong Baru
                         </button>
                     </div>
@@ -272,68 +105,31 @@
                 </div>
             </div>
 
-            <!-- Kolom Kanan -->
             <div class="lg:col-span-8">
                 <div class="glass p-6 rounded-2xl shadow-sm border border-gray-100 min-h-[600px] flex flex-col">
-                    <!-- Header Tabel -->
                     <div id="transactionHeader" class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-gray-100">
                         <div>
                             <h2 class="font-bold text-xl text-gray-800" id="currentPocketTitle">Semua Transaksi</h2>
                             <p class="text-sm text-gray-500" id="currentPocketDesc">Riwayat arus kas Anda</p>
                         </div>
-                        <button onclick="openTransactionModal()" id="addTxBtn" class="bg-indigo-600 text-white px-5 py-3 rounded-xl transition-all shadow-md flex items-center gap-2 font-bold w-full md:w-auto justify-center">
+                        <button onclick="openTransactionModal()" id="addTxBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 font-bold w-full md:w-auto justify-center">
                             <i class="fas fa-plus"></i> Transaksi Baru
                         </button>
                     </div>
 
-                    <!-- Tabel Transaksi -->
                     <div class="flex-1 border border-gray-200 rounded-xl overflow-hidden bg-white">
-
-                        <!-- Navigasi Tahun + Search Bar -->
-                        <div class="bg-gray-50 border-b border-gray-200">
-                            <!-- Navigasi Tahun -->
-                            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                                <button id="prevYearBtn" onclick="changeYear(-1)"
-                                    class="w-9 h-9 flex items-center justify-center rounded-full bg-white text-indigo-500 border border-indigo-100 shadow-sm disabled:opacity-30 disabled:cursor-not-allowed transition-all">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9 11L5 7L9 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-
-                                <h3 id="yearDisplay"
-                                    class="font-bold text-indigo-700 text-base tracking-wider bg-white px-6 py-2 rounded-full border border-indigo-100 shadow-sm min-w-[100px] text-center select-none">
-                                    ...
-                                </h3>
-
-                                <button id="nextYearBtn" onclick="changeYear(1)"
-                                    class="w-9 h-9 flex items-center justify-center rounded-full bg-white text-indigo-500 border border-indigo-100 shadow-sm disabled:opacity-30 disabled:cursor-not-allowed transition-all">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <!-- Search Bar -->
-                            <div class="px-4 py-3">
-                                <div class="relative flex items-center">
-                                    <div class="absolute left-3.5 text-gray-400 pointer-events-none">
-                                        <i class="fas fa-search text-sm"></i>
-                                    </div>
-                                    <input
-                                        type="text"
-                                        id="searchInput"
-                                        oninput="handleSearch(event)"
-                                        placeholder="Cari transaksi..."
-                                        class="w-full bg-white border border-gray-200 rounded-xl pl-10 pr-10 py-2.5 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/10 transition-all font-medium text-gray-700 placeholder-gray-400"
-                                    >
-                                    <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3.5 text-gray-400 text-sm">
-                                        <i class="fas fa-times-circle"></i>
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="flex items-center justify-between bg-gray-50 px-4 py-3 border-b border-gray-200">
+                            <button id="prevYearBtn" onclick="changeYear(-1)" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white hover:bg-gray-100 text-gray-600 transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-gray-200 shadow-sm">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h3 id="yearDisplay" class="font-bold text-gray-800 text-base tracking-wide bg-white px-6 py-2 rounded-lg border border-gray-200 shadow-sm">
+                                ...
+                            </h3>
+                            <button id="nextYearBtn" onclick="changeYear(1)" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white hover:bg-gray-100 text-gray-600 transition-all disabled:opacity-30 disabled:cursor-not-allowed border border-gray-200 shadow-sm">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
 
-                        <!-- Tabel -->
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse min-w-[550px]">
                                 <thead class="bg-white">
@@ -346,19 +142,13 @@
                                 </thead>
                                 <tbody id="transactionBody" class="divide-y divide-gray-100"></tbody>
                             </table>
-
-                            <!-- Empty State -->
+                            
                             <div id="emptyState" class="hidden py-20 flex flex-col items-center justify-center text-center bg-gray-50/50">
                                 <div class="bg-white p-6 rounded-full mb-4 shadow-sm border border-gray-100">
                                     <i class="fas fa-folder-open text-4xl text-gray-300"></i>
                                 </div>
-                                <h3 id="emptyTitle" class="text-gray-600 font-bold text-lg">Tidak ada catatan</h3>
-                                <p id="emptyDesc" class="text-gray-400 text-sm mt-1">Belum ada transaksi di tahun ini.</p>
-                                <!-- CTA di empty state -->
-                                <button id="emptyAction" onclick="openTransactionModal()"
-                                    class="mt-5 bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-md shadow-indigo-600/20 flex items-center gap-2 transition-all">
-                                    <i class="fas fa-plus"></i> Catat Transaksi Pertama
-                                </button>
+                                <h3 class="text-gray-600 font-bold text-lg">Tidak ada catatan</h3>
+                                <p class="text-gray-400 text-sm mt-1">Belum ada transaksi di tahun ini.</p>
                             </div>
                         </div>
                     </div>
@@ -367,27 +157,25 @@
         </div>
     </main>
 
-    <!-- ======== MODALS ======== -->
-
-    <!-- Settings Modal -->
+    <!-- Modals -->
     <div id="settingsModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[60] p-4 opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl w-full max-w-sm p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-gray-800">Pengaturan Data</h3>
-                <button onclick="toggleModal('settingsModal')" class="text-gray-400 bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center">
+                <button onclick="toggleModal('settingsModal')" class="text-gray-400 hover:text-gray-600 bg-gray-100 hover:bg-gray-200 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <p class="text-sm text-gray-500 mb-6">Amankan data keuangan Anda dengan mencadangkannya ke perangkat, atau pulihkan data dari perangkat lain.</p>
             <div class="space-y-4">
-                <button onclick="exportData()" class="w-full flex items-center justify-between bg-indigo-50 text-indigo-700 px-5 py-4 rounded-2xl font-bold border border-indigo-100">
+                <button onclick="exportData()" class="w-full flex items-center justify-between bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-5 py-4 rounded-2xl font-bold transition-colors border border-indigo-100">
                     <div class="flex items-center gap-3">
                         <i class="fas fa-file-download text-lg"></i>
                         <span>Export Data (Backup)</span>
                     </div>
                     <i class="fas fa-chevron-right text-indigo-300"></i>
                 </button>
-                <label class="w-full flex items-center justify-between bg-emerald-50 text-emerald-700 px-5 py-4 rounded-2xl font-bold border border-emerald-100 cursor-pointer">
+                <label class="w-full flex items-center justify-between bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-5 py-4 rounded-2xl font-bold transition-colors border border-emerald-100 cursor-pointer">
                     <div class="flex items-center gap-3">
                         <i class="fas fa-file-upload text-lg"></i>
                         <span>Import Data (Restore)</span>
@@ -399,7 +187,6 @@
         </div>
     </div>
 
-    <!-- Pocket Modal -->
     <div id="pocketModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[60] p-4 opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl w-full max-w-md p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300">
             <h3 class="text-xl font-bold mb-6 text-gray-800">Buat Kantong Baru</h3>
@@ -414,40 +201,27 @@
                 </div>
             </div>
             <div class="mt-8 flex gap-3">
-                <button type="button" onclick="toggleModal('pocketModal')" class="flex-1 px-4 py-3 border border-gray-200 text-gray-600 rounded-xl font-bold">Batal</button>
-                <button type="button" onclick="addPocket()" class="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-lg shadow-indigo-600/30">Simpan Kantong</button>
+                <button type="button" onclick="toggleModal('pocketModal')" class="flex-1 px-4 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl font-bold transition-colors">Batal</button>
+                <button type="button" onclick="addPocket()" class="flex-1 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-colors shadow-lg shadow-indigo-600/30">Simpan Kantong</button>
             </div>
         </div>
     </div>
 
-    <!-- Transaction Modal -->
     <div id="transactionModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[60] p-4 opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl w-full max-w-md p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto" style="padding-bottom: max(2rem, env(safe-area-inset-bottom));">
             <h3 id="txModalTitle" class="text-xl font-bold mb-6 text-gray-800">Tambah Transaksi</h3>
             <form id="txForm" class="space-y-5" onsubmit="event.preventDefault(); saveTransaction();">
-
-                <!-- Toggle Tipe -->
                 <div class="grid grid-cols-2 gap-2 bg-gray-100 p-1.5 rounded-2xl relative">
                     <button type="button" onclick="setTxType('in')" id="btnTypeIn" class="py-2.5 rounded-xl font-bold transition-all bg-white text-emerald-600 shadow-sm border border-gray-200/50">Pemasukan</button>
-                    <button type="button" onclick="setTxType('out')" id="btnTypeOut" class="py-2.5 rounded-xl font-bold transition-all text-gray-500 border border-transparent">Pengeluaran</button>
+                    <button type="button" onclick="setTxType('out')" id="btnTypeOut" class="py-2.5 rounded-xl font-bold transition-all text-gray-500 hover:text-gray-700 border border-transparent">Pengeluaran</button>
                 </div>
-
-                <!-- Nominal — input teks dengan formatter -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nominal (Rp)</label>
                     <div class="relative">
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold select-none">Rp</span>
-                        <input
-                            type="text"
-                            inputmode="numeric"
-                            id="txAmount"
-                            placeholder="0"
-                            class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl pl-12 pr-4 py-3 outline-none transition-all text-lg font-bold text-gray-800"
-                        >
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">Rp</span>
+                        <input type="number" id="txAmount" placeholder="0" min="1" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl pl-12 pr-4 py-3 outline-none transition-all text-lg font-bold text-gray-800">
                     </div>
                 </div>
-
-                <!-- Pilih Kantong -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Pilih Kantong</label>
                     <div class="relative" id="customPocketSelectContainer">
@@ -459,14 +233,11 @@
                         <div id="customPocketSelectMenu" class="absolute w-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-xl z-[70] hidden opacity-0 translate-y-[-10px] transition-all duration-200 max-h-60 overflow-y-auto custom-scroll p-1"></div>
                     </div>
                 </div>
-
-                <!-- Keterangan -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Keterangan</label>
                     <input type="text" id="txNote" placeholder="Contoh: Makan Siang / Gaji" class="w-full border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl px-4 py-3 outline-none transition-all font-medium text-gray-800">
                 </div>
-
-                <!-- Tanggal -->
+                
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Tanggal</label>
                     <div class="relative flex items-center">
@@ -478,14 +249,13 @@
                 </div>
 
                 <div class="mt-8 flex gap-3 pt-2">
-                    <button type="button" onclick="toggleModal('transactionModal')" class="flex-1 px-4 py-3 border border-gray-200 text-gray-600 rounded-xl font-bold">Batal</button>
-                    <button type="submit" class="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-lg shadow-indigo-600/30">Simpan Data</button>
+                    <button type="button" onclick="toggleModal('transactionModal')" class="flex-1 px-4 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl font-bold transition-colors">Batal</button>
+                    <button type="submit" class="flex-1 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-colors shadow-lg shadow-indigo-600/30">Simpan Data</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Confirm Modal -->
     <div id="confirmModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center z-[80] p-4 opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 text-center">
             <div class="w-20 h-20 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-5 text-4xl shadow-inner">
@@ -494,8 +264,8 @@
             <h3 id="confirmTitle" class="text-xl font-bold mb-2 text-gray-800">Konfirmasi</h3>
             <p id="confirmMessage" class="text-gray-500 text-sm mb-8 px-2">Apakah Anda yakin?</p>
             <div class="flex gap-3">
-                <button type="button" id="btnConfirmCancel" class="flex-1 px-4 py-3 border border-gray-200 text-gray-700 rounded-xl font-bold">Batal</button>
-                <button type="button" id="btnConfirmOk" class="flex-1 px-4 py-3 bg-rose-600 text-white rounded-xl font-bold shadow-md shadow-rose-500/30">Ya, Setuju!</button>
+                <button type="button" id="btnConfirmCancel" class="flex-1 px-4 py-3 border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-xl font-bold transition-colors">Batal</button>
+                <button type="button" id="btnConfirmOk" class="flex-1 px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold transition-colors shadow-md shadow-rose-500/30">Ya, Setuju!</button>
             </div>
         </div>
     </div>
