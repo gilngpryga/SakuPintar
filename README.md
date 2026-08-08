@@ -10,7 +10,7 @@ SakuPintar adalah aplikasi pengelolaan keuangan pribadi berbasis web untuk memba
 * **Kantong uang** — Buat beberapa kantong sesuai kebutuhan, seperti Bulanan, Tabungan, Jajan, atau kategori lainnya.
 * **Catatan transaksi** — Catat pemasukan dan pengeluaran lengkap dengan nominal, keterangan, dan tanggal.
 * **Informasi saldo** — Lihat saldo masing-masing kantong maupun total saldo dari seluruh kantong.
-* **Data tersimpan di perangkat** — Data keuangan disimpan menggunakan "localStorage" dan tidak dikirim ke server.
+* **Data tersimpan di perangkat** — Data keuangan disimpan menggunakan `localStorage` dan tidak dikirim ke server.
 * **PWA** — SakuPintar bisa ditambahkan ke layar utama dan digunakan seperti aplikasi biasa tanpa perlu mengunduhnya dari Play Store atau App Store.
 * **Bisa digunakan offline** — Setelah aplikasi dibuka dan tersimpan di perangkat, SakuPintar dapat tetap digunakan tanpa koneksi internet.
 
@@ -31,7 +31,7 @@ SakuPintar adalah aplikasi pengelolaan keuangan pribadi berbasis web untuk memba
 
 ### iPhone (Safari)
 
-1. Buka "SakuPintar" (https://gilngpryga.github.io/SakuPintar/) menggunakan **Safari**.
+1. Buka [SakuPintar] (https://gilngpryga.github.io/SakuPintar/) menggunakan **Safari**.
 2. Tekan tombol **Share** (ikon kotak dengan panah ke atas).
 3. Pilih **Add to Home Screen** atau **Tambah ke Layar Utama**.
 4. Tekan **Add**.
@@ -40,7 +40,7 @@ Setelah itu, ikon **SakuPintar** akan muncul di layar utama dan bisa dibuka sepe
 
 ### Android (Chrome)
 
-1. Buka "SakuPintar" (https://gilngpryga.github.io/SakuPintar/) menggunakan **Chrome**.
+1. Buka [SakuPintar] (https://gilngpryga.github.io/SakuPintar/) menggunakan **Chrome**.
 2. Tekan ikon **titik tiga** di pojok kanan atas.
 3. Pilih **Install App** atau **Tambahkan ke Layar Utama**.
 4. Ikuti instruksi yang muncul di layar.
@@ -49,8 +49,8 @@ Setelah itu, ikon **SakuPintar** akan muncul di layar utama dan bisa dibuka sepe
 
 ## Catatan
 
-**SakuPintar** menyimpan data secara **lokal** di perangkat menggunakan "localStorage". Artinya, **data tidak tersimpan di server** atau akun online.
+**SakuPintar** menyimpan data secara **lokal** di perangkat menggunakan `localStorage`. Artinya, **data tidak tersimpan di server** atau akun online.
 
-Karena data tersimpan di perangkat, menghapus data browser atau "localStorage" dapat menyebabkan data SakuPintar ikut terhapus. Sebaiknya lakukan **backup** berkala jika data yang tersimpan sudah penting.
+Karena data tersimpan di perangkat, menghapus data browser atau `localStorage` dapat menyebabkan data SakuPintar ikut terhapus. Sebaiknya lakukan **backup** berkala jika data yang tersimpan sudah penting.
 
 **SakuPintar dibuat sebagai aplikasi pengelolaan keuangan pribadi yang sederhana dan ringan.**
