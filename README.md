@@ -31,7 +31,7 @@ SakuPintar adalah aplikasi pengelolaan keuangan pribadi berbasis web untuk memba
 
 ### iPhone (Safari)
 
-1. Buka [SakuPintar] (https://gilngpryga.github.io/SakuPintar/) menggunakan **Safari**.
+1. Buka [SakuPintar](https://gilngpryga.github.io/SakuPintar/) menggunakan **Safari**.
 2. Tekan tombol **Share** (ikon kotak dengan panah ke atas).
 3. Pilih **Add to Home Screen** atau **Tambah ke Layar Utama**.
 4. Tekan **Add**.
@@ -40,7 +40,7 @@ Setelah itu, ikon **SakuPintar** akan muncul di layar utama dan bisa dibuka sepe
 
 ### Android (Chrome)
 
-1. Buka [SakuPintar] (https://gilngpryga.github.io/SakuPintar/) menggunakan **Chrome**.
+1. Buka [SakuPintar](https://gilngpryga.github.io/SakuPintar/) menggunakan **Chrome**.
 2. Tekan ikon **titik tiga** di pojok kanan atas.
 3. Pilih **Install App** atau **Tambahkan ke Layar Utama**.
 4. Ikuti instruksi yang muncul di layar.
