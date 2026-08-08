@@ -1,22 +1,23 @@
-# SakuPintar
+SakuPintar
 
-> **Akses Aplikasi:** [https://gilngpryga.github.io/SakuPintar/](https://gilngpryga.github.io/SakuPintar/)
+«Akses aplikasi: https://gilngpryga.github.io/SakuPintar/»
 
-SakuPintar adalah aplikasi pengelolaan keuangan pribadi berbasis web untuk membantu Anda **mengelola kantong uang**, **mencatat transaksi harian**, dan **memantau pemasukan serta pengeluaran** dengan mudah langsung dari browser atau layar utama ponsel Anda.
-
----
-
-## ✨ Fitur Utama
-* **Manajemen Kantong**: Pisahkan dana Anda ke dalam berbagai kategori (misal: Tabungan, Jajan, Bulanan).
-* **Catatan Transaksi**: Input pemasukan dan pengeluaran secara cepat dan terorganisir.
-* **Visualisasi Saldo**: Pantau total saldo secara real-time di bagian dashboard.
-* **Privasi Maksimal**: Data Anda tidak dikirim ke server mana pun; semua tersimpan aman di `localStorage` perangkat Anda.
-* **Dukungan PWA (Progressive Web App)**: Instal aplikasi langsung ke layar utama tanpa melalui App Store/Play Store.
-* **Mode Offline**: Berkat Service Worker, aplikasi tetap dapat dibuka meski tanpa koneksi internet.
+SakuPintar adalah aplikasi sederhana untuk membantu mengatur keuangan pribadi. Dengan aplikasi ini, Anda bisa membagi uang ke beberapa kantong, mencatat pemasukan dan pengeluaran, serta melihat saldo yang dimiliki langsung dari browser atau layar utama ponsel.
 
 ---
 
-## 📸 Preview Aplikasi
+Fitur
+
+- Kantong uang — Buat beberapa kantong sesuai kebutuhan, seperti Bulanan, Tabungan, Jajan, atau kategori lainnya.
+- Catatan transaksi — Catat pemasukan dan pengeluaran lengkap dengan nominal, keterangan, dan tanggal.
+- Informasi saldo — Lihat saldo masing-masing kantong maupun total saldo dari seluruh kantong.
+- Data tersimpan di perangkat — Data keuangan disimpan menggunakan "localStorage" dan tidak dikirim ke server.
+- PWA — SakuPintar bisa ditambahkan ke layar utama dan digunakan seperti aplikasi biasa tanpa perlu mengunduhnya dari Play Store atau App Store.
+- Bisa digunakan offline — Setelah aplikasi dibuka dan tersimpan di perangkat, SakuPintar dapat tetap digunakan tanpa koneksi internet.
+
+---
+
+📸 Preview
 
 <p align="center">
   <img src="Screenshot_Pocket_1.jpeg" width="200" alt="Dashboard Utama">
@@ -25,19 +26,30 @@ SakuPintar adalah aplikasi pengelolaan keuangan pribadi berbasis web untuk memba
   <img src="Screenshot_Pocket_4.jpeg" width="200" alt="Riwayat Keuangan">
 </p>
 
+📱 Cara Instal
+
+iPhone (Safari)
+
+1. Buka "SakuPintar" (https://gilngpryga.github.io/SakuPintar/) menggunakan Safari.
+2. Tekan tombol Share (ikon kotak dengan panah ke atas).
+3. Pilih Add to Home Screen atau Tambah ke Layar Utama.
+4. Tekan Add.
+
+Setelah itu, ikon SakuPintar akan muncul di layar utama dan bisa dibuka seperti aplikasi lainnya.
+
+Android (Chrome)
+
+1. Buka "SakuPintar" (https://gilngpryga.github.io/SakuPintar/) menggunakan Chrome.
+2. Tekan ikon titik tiga di pojok kanan atas.
+3. Pilih Install App atau Tambahkan ke Layar Utama.
+4. Ikuti instruksi yang muncul di layar.
+
 ---
 
-## 📱 Panduan Instalasi
+📌 Catatan
 
-### Di iPhone (Safari)
-1. Buka link [SakuPintar](https://gilngpryga.github.io/SakuPintar/) di browser **Safari**.
-2. Klik tombol **Share** (ikon kotak dengan panah ke atas).
-3. Gulir ke bawah dan pilih **'Add to Home Screen'** atau **'Tambah ke Layar Utama'**.
-4. Klik **Add**. Ikon SakuPintar akan muncul di layar utama Anda.
+SakuPintar menyimpan data secara lokal di perangkat menggunakan "localStorage". Artinya, data tidak tersimpan di server atau akun online.
 
-### Di Android (Chrome)
-1. Buka link di browser **Chrome**.
-2. Klik ikon **titik tiga** di pojok kanan atas.
-3. Pilih **'Install App'** atau **'Tambahkan ke Layar Utama'**.
+Karena data tersimpan di perangkat, menghapus data browser atau "localStorage" dapat menyebabkan data SakuPintar ikut terhapus. Sebaiknya lakukan backup jika data yang tersimpan sudah penting.
 
----
+SakuPintar dibuat sebagai aplikasi pengelolaan keuangan pribadi yang sederhana dan ringan.
